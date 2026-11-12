@@ -1181,7 +1181,7 @@ function restoreAnswers(){
 (function () {
   if (window.__bidiFix) return; window.__bidiFix = true;
   var AR = /[֐-ࣿיִ-﷿ﹰ-﻿]/, LAT = /[A-Za-zÀ-ɏ]/, DIG = /[0-9]/;
-  var PUNCT = /[?!.…:;,]/;
+  var PUNCT = /[?!.…:;,\u061F\u060C\u061B]/;
   var SKIP = { SCRIPT:1, STYLE:1, TEXTAREA:1, OPTION:1, SELECT:1, INPUT:1, TITLE:1, NOSCRIPT:1, svg:1, SVG:1, CODE:1, PRE:1 };
   var BLOCKS = /^(block|list-item|table-cell|table-caption|flex|grid|flow-root|inline-block|inline-flex|inline-grid|table|none)$/;
   function blockOf(el) {
@@ -1212,17 +1212,17 @@ function restoreAnswers(){
       var pe = n.parentElement, rtl = getComputedStyle(pe).direction === 'rtl';
       var iso = pe.closest && pe.closest('.bdfx');
       var s = n.nodeValue;
-      for (var i = 0; i < s.length; i++) chars.push({ c: s[i], n: n, i: i, rtl: rtl && !iso, fx: !!iso });
+      for (var i = 0; i < s.length; i++) chars.push({ c: s[i], n: n, i: i, rtl: rtl && !iso, ltr: !rtl && !iso, fx: !!iso });
     });
     if (!chars.length) return [];
     var hasAr = chars.some(function (x) { return AR.test(x.c); });
     function cls(x) { if (!x.rtl) return 'N'; if (AR.test(x.c)) return 'R'; if (LAT.test(x.c)) return 'L'; return 'N'; }
-    var hits = [];
-    for (var k = 0; k < chars.length; k++) {
-      var x = chars[k];
+    var hits = [], k, x, j;
+    for (k = 0; k < chars.length; k++) {
+      x = chars[k];
       var isQ = /["\u201C]/.test(x.c);
       if (!x.rtl || !(PUNCT.test(x.c) || isQ)) continue;
-      var l = 'none', r = 'none', j, sp = false;
+      var l = 'none', r = 'none', sp = false;
       for (j = k - 1; j >= 0; j--) { var cl = cls(chars[j]); if (cl !== 'N') { l = cl; break; } if (!chars[j].rtl) break; }
       for (j = k + 1; j < chars.length; j++) { var cr = cls(chars[j]); if (cr !== 'N') { r = cr; break; } if (!chars[j].rtl) break; }
       var trail = (l === 'L' && r !== 'L'), lead = (r === 'L' && l === 'none' && (!hasAr || isQ));
@@ -1241,18 +1241,47 @@ function restoreAnswers(){
       if (!(!hasAr || r === 'R' || /[?!…]/.test(x.c))) continue;
       hits.push({ node: x.n, i: x.i, kind: 'trail', ch: x.c });
     }
+    // Mirror case: Arabic text inside a left-to-right (English) box, e.g. a
+    // heading "Let's — لنفعل..." or an Arabic translation line ending in "." or "؟".
+    function cl2(x) { if (!x.ltr) return 'N'; if (AR.test(x.c)) return 'R'; if (LAT.test(x.c)) return 'L'; return 'N'; }
+    for (k = 0; k < chars.length; k++) {
+      x = chars[k];
+      if (!x.ltr || !PUNCT.test(x.c)) continue;
+      var l2 = 'none', r2 = 'none';
+      for (j = k - 1; j >= 0; j--) { var a2 = cl2(chars[j]); if (a2 !== 'N') { l2 = a2; break; } if (!chars[j].ltr) break; }
+      for (j = k + 1; j < chars.length; j++) { var b2 = cl2(chars[j]); if (b2 !== 'N') { r2 = b2; break; } if (!chars[j].ltr) break; }
+      if (l2 !== 'R' || r2 === 'R') continue;
+      var closed = false;
+      for (j = k - 1; j >= 0 && !AR.test(chars[j].c); j--) { if (/["\u201D\u00BB)\]']/.test(chars[j].c)) { closed = true; break; } }
+      if (closed) continue;
+      var words = 0, inWord = false;
+      for (j = k - 1; j >= 0 && chars[j].ltr && !LAT.test(chars[j].c) && !/[:\u2014\u2013(\u00BB"\u201D]/.test(chars[j].c); j--) {
+        if (AR.test(chars[j].c)) { if (!inWord) { words++; inWord = true; } } else if (/\s/.test(chars[j].c)) inWord = false;
+      }
+      var ell = x.c === '\u2026' || (x.c === '.' && ((chars[k - 1] && chars[k - 1].c === '.') || (chars[k + 1] && chars[k + 1].c === '.')));
+      var arMark = /[\u061F\u060C\u061B]/.test(x.c);
+      if (!(arMark || ell || x.c === '!' || (words >= 2 && /[.]/.test(x.c)))) continue;
+      if (r2 === 'L' && !(arMark || words >= 2)) continue;
+      hits.push({ node: x.n, i: x.i, kind: 'artrail', ch: x.c, dir: 'rtl' });
+    }
+    hits.sort(function (p1, p2) { return p1.node === p2.node ? p1.i - p2.i : (p1.node.compareDocumentPosition(p2.node) & 4 ? -1 : 1); });
     return hits;
   }
   function fixBlock(block) {
+    var total = 0;
+    for (var pass = 0; pass < 3; pass++) { var n = fixOnce(block); total += n; if (!n) break; }
+    return total;
+  }
+  function fixOnce(block) {
     var hits = scanBlock(block);
     // group consecutive marks in the same node
     for (var h = hits.length - 1; h >= 0; h--) {
       var a = hits[h], end = a.i + 1, start = a.i;
-      while (h > 0 && hits[h - 1].node === a.node && hits[h - 1].i === start - 1) { h--; start--; }
+      while (h > 0 && hits[h - 1].node === a.node && hits[h - 1].i === start - 1 && (hits[h - 1].dir || 'ltr') === (a.dir || 'ltr')) { h--; start--; }
       var node = a.node; if (!node.parentNode) continue;
       var tail = node.splitText(start); tail.splitText(end - start);
       var sp = document.createElement('span');
-      sp.className = 'bdfx'; sp.setAttribute('dir', 'ltr');
+      sp.className = 'bdfx'; sp.setAttribute('dir', a.dir || 'ltr');
       sp.style.unicodeBidi = 'embed';
       node.parentNode.insertBefore(sp, tail); sp.appendChild(tail);
     }

@@ -2483,5 +2483,127 @@ if(document.readyState==='loading'){
 }
 
 </script>
+<script>
+/* Teacher Jaber — bidi punctuation fix.
+   English text shown inside a right-to-left (Arabic) box loses its end
+   punctuation to the wrong side ("?...Will you be able to").  This finds
+   punctuation that belongs to an English run inside an RTL block and wraps
+   it in a tiny LTR embedding so it stays with the English.  Text content
+   is unchanged, and new content added by the page is handled too. */
+(function () {
+  if (window.__bidiFix) return; window.__bidiFix = true;
+  var AR = /[֐-ࣿיִ-﷿ﹰ-﻿]/, LAT = /[A-Za-zÀ-ɏ]/, DIG = /[0-9]/;
+  var PUNCT = /[?!.…:;,]/;
+  var SKIP = { SCRIPT:1, STYLE:1, TEXTAREA:1, OPTION:1, SELECT:1, INPUT:1, TITLE:1, NOSCRIPT:1, svg:1, SVG:1, CODE:1, PRE:1 };
+  var BLOCKS = /^(block|list-item|table-cell|table-caption|flex|grid|flow-root|inline-block|inline-flex|inline-grid|table|none)$/;
+  function blockOf(el) {
+    while (el && el !== document.body) {
+      var d = getComputedStyle(el).display;
+      if (BLOCKS.test(d)) return el;
+      el = el.parentElement;
+    }
+    return document.body;
+  }
+  function textNodes(block) {
+    var out = [], w = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        for (var p = n.parentElement; p && p !== block; p = p.parentElement) {
+          if (SKIP[p.tagName]) return NodeFilter.FILTER_REJECT;
+          if (p !== block && BLOCKS.test(getComputedStyle(p).display)) return NodeFilter.FILTER_REJECT;
+        }
+        if (n.parentElement && SKIP[n.parentElement.tagName]) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      } });
+    while (w.nextNode()) out.push(w.currentNode);
+    return out;
+  }
+  // Returns list of {node, i, kind} for punctuation that will render on the wrong side.
+  function scanBlock(block) {
+    var chars = [];
+    textNodes(block).forEach(function (n) {
+      var pe = n.parentElement, rtl = getComputedStyle(pe).direction === 'rtl';
+      var iso = pe.closest && pe.closest('.bdfx');
+      var s = n.nodeValue;
+      for (var i = 0; i < s.length; i++) chars.push({ c: s[i], n: n, i: i, rtl: rtl && !iso, fx: !!iso });
+    });
+    if (!chars.length) return [];
+    var hasAr = chars.some(function (x) { return AR.test(x.c); });
+    function cls(x) { if (!x.rtl) return 'N'; if (AR.test(x.c)) return 'R'; if (LAT.test(x.c)) return 'L'; return 'N'; }
+    var hits = [];
+    for (var k = 0; k < chars.length; k++) {
+      var x = chars[k];
+      var isQ = /["\u201C]/.test(x.c);
+      if (!x.rtl || !(PUNCT.test(x.c) || isQ)) continue;
+      var l = 'none', r = 'none', j, sp = false;
+      for (j = k - 1; j >= 0; j--) { var cl = cls(chars[j]); if (cl !== 'N') { l = cl; break; } if (!chars[j].rtl) break; }
+      for (j = k + 1; j < chars.length; j++) { var cr = cls(chars[j]); if (cr !== 'N') { r = cr; break; } if (!chars[j].rtl) break; }
+      var trail = (l === 'L' && r !== 'L'), lead = (r === 'L' && l === 'none' && (!hasAr || isQ));
+      if (isQ && !lead) continue;
+      if (lead) { hits.push({ node: x.n, i: x.i, kind: 'lead', ch: x.c }); continue; }
+      if (!trail) continue;
+      // The mark belongs to the English only when the English is a sentence
+      // (several words, starting with a capital letter) and either the box is
+      // all English, Arabic text follows it, or the mark is ? ! or an ellipsis.
+      var first = '', gap = false;
+      for (j = k - 1; j >= 0 && chars[j].rtl && !AR.test(chars[j].c) && !(/[:\u2014\u2013(\u00AB\u201C]/.test(chars[j].c) || (chars[j].c === '"' && (!chars[j - 1] || /\s/.test(chars[j - 1].c)))); j--) {
+        if (LAT.test(chars[j].c)) { if (gap) sp = true; first = chars[j].c; }
+        else if (chars[j].c === ' ' && first) gap = true;
+      }
+      if (!sp || first !== first.toUpperCase()) continue;
+      if (!(!hasAr || r === 'R' || /[?!…]/.test(x.c))) continue;
+      hits.push({ node: x.n, i: x.i, kind: 'trail', ch: x.c });
+    }
+    return hits;
+  }
+  function fixBlock(block) {
+    var hits = scanBlock(block);
+    // group consecutive marks in the same node
+    for (var h = hits.length - 1; h >= 0; h--) {
+      var a = hits[h], end = a.i + 1, start = a.i;
+      while (h > 0 && hits[h - 1].node === a.node && hits[h - 1].i === start - 1) { h--; start--; }
+      var node = a.node; if (!node.parentNode) continue;
+      var tail = node.splitText(start); tail.splitText(end - start);
+      var sp = document.createElement('span');
+      sp.className = 'bdfx'; sp.setAttribute('dir', 'ltr');
+      sp.style.unicodeBidi = 'embed';
+      node.parentNode.insertBefore(sp, tail); sp.appendChild(tail);
+    }
+    return hits.length;
+  }
+  function allBlocks(root) {
+    var set = new Set();
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (w.nextNode()) { var t = w.currentNode; if (LAT.test(t.nodeValue) || PUNCT.test(t.nodeValue)) { var pe = t.parentElement; if (pe && !SKIP[pe.tagName]) set.add(blockOf(pe)); } }
+    return set;
+  }
+  var busy = false;
+  function run(root) {
+    if (busy) return 0; busy = true; var n = 0;
+    try { allBlocks(root || document.body).forEach(function (b) { n += fixBlock(b); }); } catch (e) {}
+    busy = false; return n;
+  }
+  window.__bidiScan = function () {
+    var out = []; allBlocks(document.body).forEach(function (b) { scanBlock(b).forEach(function (h) {
+      out.push({ ch: h.ch, kind: h.kind, text: (b.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 90) }); }); });
+    return out;
+  };
+  window.__bidiRun = run;
+  var pending = new Set(), timer = null;
+  function flush() { timer = null; var list = Array.from(pending); pending.clear(); busy = true;
+    try { var seen = new Set(); list.forEach(function (el) { if (!el.isConnected) return; allBlocks(el).forEach(function (b) { if (!seen.has(b)) { seen.add(b); fixBlock(b); } }); var bb = blockOf(el); if (!seen.has(bb)) { seen.add(bb); fixBlock(bb); } }); } catch (e) {}
+    busy = false; }
+  function start() {
+    if (window.__bidiNoAuto) return;
+    run(document.body);
+    new MutationObserver(function (ms) {
+      if (busy) return;
+      ms.forEach(function (m) { var t = m.target.nodeType === 3 ? m.target.parentElement : m.target; if (t) pending.add(t); });
+      if (!timer) timer = setTimeout(flush, 30);
+    }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+
+</script>
 </body>
 </html>

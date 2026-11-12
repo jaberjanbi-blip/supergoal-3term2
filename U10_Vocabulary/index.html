@@ -1,0 +1,2503 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 10 Vocabulary – Who Used My Toothpaste? | Teacher Jaber</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+  --coral: #FF6B6B;
+  --teal: #4ECDC4;
+  --navy: #2C3E7A;
+  --gold: #FFD93D;
+  --purple: #9B59B6;
+  --green: #2ECC71;
+  --blue: #3498DB;
+  --orange: #FF8C42;
+  --pink: #FF6BA8;
+  --red: #EF4444;
+
+  --bg-color: #F0F4FF;
+  --text-main: #1A1A2E;
+  --text-muted: #666666;
+  --card-bg: #FFFFFF;
+  --card-front-bg: #FFFFFF;
+  --card-back-bg: #2C3E7A;
+  --card-back-text: #FFFFFF;
+  --block-bg: #F8FAFF;
+  --opt-bg: #F0F4FF;
+  --border-color: #E5E7EB;
+  --shadow: 0 8px 32px rgba(44,62,122,.13);
+  --nav-bg: #0f1e30;
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-main: #F0F4FF;
+  --text-muted: #A0AEC0;
+  --card-bg: #1E1E2E;
+  --card-front-bg: #1E1E2E;
+  --card-back-bg: #2A2A40;
+  --card-back-text: #F0F4FF;
+  --block-bg: #252538;
+  --opt-bg: #2A2A40;
+  --border-color: #3F3F5A;
+  --shadow: 0 8px 32px rgba(0,0,0,.4);
+  --nav-bg: #070E1A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-main);
+  overflow-x: hidden;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body::before {
+  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, #667eea22, #764ba222, #f7971e22);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── SITE HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #7C3AED, #DC2E5D 55%, #F59E0B);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 3px 20px rgba(0,0,0,.35);
+}
+.header-inner {
+  background: rgba(20,10,40,.85);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.header-left h1 { font-size: 1rem; font-weight: 800; color: white; line-height: 1.2; }
+.header-left .sub { font-size: .72rem; color: #c4b5fd; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.header-badge {
+  background: var(--gold); color: #2C3E7A; font-size: .7rem; font-weight: 800;
+  padding: 4px 11px; border-radius: 20px; white-space: nowrap;
+}
+
+.dark-toggle, .hdr-btn {
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  border-radius: 20px; cursor: pointer; color: white; font-size: .75rem; font-weight: 700;
+  padding: 5px 12px; transition: .2s; white-space: nowrap; display: flex; align-items: center;
+  gap: 5px; font-family: inherit;
+}
+.dark-toggle:hover, .hdr-btn:hover { background: rgba(255,255,255,.28); transform: translateY(-1px); }
+
+.hud-bar { background: rgba(20,5,40,.9); padding: 5px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hud-item { display: flex; align-items: center; gap: 5px; font-size: .75rem; font-weight: 800; color: white; }
+.xp-badge {
+  background: linear-gradient(135deg,#F59E0B,#FBBF24); color: #1a0a00; padding: 3px 10px;
+  border-radius: 20px; font-size: .72rem; font-weight: 900; transition: transform .15s;
+}
+.xp-badge.bump { transform: scale(1.35); }
+.coin-badge {
+  background: linear-gradient(135deg,#FBBF24,#F59E0B);
+  color: #452b00;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 900;
+  transition: transform .15s;
+}
+.coin-badge.bump { transform: scale(1.35); }
+.mcq-opt.eliminated { opacity:.25; pointer-events:none; text-decoration:line-through; }
+.btn-ghost { background: transparent; border: 2px solid rgba(255,255,255,.5); box-shadow:none; }
+.streak-badge {
+  background: linear-gradient(135deg,#EA580C,#F97316); color: white; padding: 3px 10px;
+  border-radius: 20px; font-size: .72rem; font-weight: 900; display: flex; align-items: center; gap: 3px;
+}
+.streak-badge.hot { animation: streakPulse .4s ease; }
+@keyframes streakPulse { 0%{transform:scale(1);} 50%{transform:scale(1.4);} 100%{transform:scale(1);} }
+.level-badge { background: #9B59B6; color: white; padding: 3px 10px; border-radius: 20px; font-size: .72rem; font-weight: 800; }
+.rank-badge { background: linear-gradient(135deg,#1E3A5F,#2563EB); color: white; padding: 3px 10px; border-radius: 20px; font-size: .72rem; font-weight: 800; white-space: nowrap; }
+
+.progress-container { height: 5px; width: 100%; background: rgba(255,255,255,.2); }
+.progress-bar { height: 100%; width: 0%; background: var(--gold); transition: width .4s ease; }
+
+.xp-toast {
+  position: fixed; right: 20px; top: 70px;
+  background: linear-gradient(135deg,#1E3A5F,#2563EB); color: white; border-radius: 12px;
+  padding: 10px 18px; font-size: .9rem; font-weight: 800; z-index: 9999;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25); opacity: 0; transform: translateY(-10px) scale(.9);
+  transition: opacity .25s,transform .25s; pointer-events: none;
+}
+.xp-toast.show { opacity: 1; transform: translateY(0) scale(1); }
+
+.nav-tabs {
+  display: flex; overflow-x: auto; gap: 4px; background: var(--nav-bg); padding: 7px 14px;
+  scrollbar-width: thin; scrollbar-color:#4338CA rgba(255,255,255,.08); position: sticky; top: 0; z-index: 100; scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; transition: background 0.3s ease; cursor:grab; user-select:none;
+}
+.nav-tabs.is-dragging{cursor:grabbing;}
+.nav-tabs::-webkit-scrollbar { height:5px; display:block; }
+.nav-tabs::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:10px;margin:0 14px;}
+.nav-tabs::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#7C3AED,#2563EB);border-radius:10px;}
+.nav-tabs::-webkit-scrollbar-thumb:hover{background:linear-gradient(90deg,#6D28D9,#1d4ed8);}
+.nav-tabs button {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px; color: #94a3b8; cursor: pointer; font-size: .74rem;
+  font-weight: 600; padding: 6px 13px; white-space: nowrap; transition: all .2s; font-family: inherit;
+}
+.nav-tabs button.active { background: var(--gold); color: #1A1A2E; border-color: var(--gold); font-weight: 800; }
+.nav-tabs button:hover:not(.active) { background: rgba(255,255,255,.15); color: white; }
+
+.audio-btn {
+  background: var(--opt-bg); border: none; border-radius: 50%; width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  font-size: 0.8rem; margin-left: 6px; vertical-align: middle; transition: 0.2s; color: var(--text-main);
+}
+.audio-btn:hover { background: var(--blue); color: white; transform: scale(1.1); }
+.vocab-card-front .audio-btn { width: 36px; height: 36px; font-size: 1.1rem; margin-top: 10px; background: var(--bg-color); }
+
+.container { max-width: 960px; margin: 0 auto; padding: 24px 14px 80px; position: relative; z-index: 1; }
+.page { display: none; animation: fadeIn 0.4s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.player-card {
+  background: var(--card-bg); padding: 15px 20px; border-radius: 15px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px; transition: background 0.3s;
+}
+.player-card input {
+  flex: 1; padding: 10px 15px; border-radius: 25px; border: 2px solid var(--border-color);
+  background: var(--block-bg); color: var(--text-main); font-size: 1rem; font-weight: bold;
+  font-family: inherit; outline: none; transition: border-color 0.3s;
+}
+.player-card input:focus { border-color: var(--teal); }
+
+.section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.section-title h2 { font-size: 1.2rem; font-weight: 900; color: var(--text-main); }
+.section-title .tag { background: linear-gradient(135deg, var(--coral), var(--pink)); color: white; font-size: .75rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; }
+
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.vocab-card { background: transparent; perspective: 1000px; height: 160px; cursor: pointer; border: none; padding: 0; }
+.vocab-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.vocab-card.flipped .vocab-card-inner { transform: rotateY(180deg); }
+.vocab-card-front, .vocab-card-back {
+  position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px;
+  padding: 16px 12px; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  justify-content: center; align-items: center; border-top: 4px solid transparent;
+}
+.vocab-card-front { background: var(--card-front-bg); transition: background 0.3s; }
+.vocab-card-back { background: var(--card-back-bg); color: var(--card-back-text); transform: rotateY(180deg); border-top: none; }
+.vocab-card-back .arabic { color: var(--gold); font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; direction: rtl; }
+.vocab-card-back .example { color: #E5E7EB; font-size: .85rem; font-style: italic; line-height: 1.4; }
+
+.vocab-card.verb .vocab-card-front { border-top-color: var(--coral); }
+.vocab-card.noun .vocab-card-front { border-top-color: var(--blue); }
+.vocab-card.adj .vocab-card-front { border-top-color: var(--purple); }
+.vocab-card.phrase .vocab-card-front { border-top-color: var(--green); }
+
+.vocab-card .type-badge { font-size: .65rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+.vocab-card.verb .type-badge { background: rgba(255,107,107,0.1); color: var(--coral); }
+.vocab-card.noun .type-badge { background: rgba(52,152,219,0.1); color: var(--blue); }
+.vocab-card.adj .type-badge { background: rgba(155,89,182,0.1); color: var(--purple); }
+.vocab-card.phrase .type-badge { background: rgba(46,204,113,0.1); color: var(--green); }
+.vocab-card .word { font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 6px; }
+
+.cat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; margin-top: 8px; }
+.cat-header .icon { font-size: 1.2rem; }
+.cat-header h3 { font-size: 1rem; font-weight: 800; color: var(--text-main); }
+.cat-header .line { flex: 1; height: 2px; background: linear-gradient(90deg, var(--text-main), transparent); border-radius: 2px; opacity: 0.2; }
+
+.ex-card { background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 22px; transition: background 0.3s; }
+.ex-head { padding: 16px 22px 12px; border-bottom: 2px solid var(--block-bg); }
+.ex-head h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-main); }
+.ex-head p { font-size: .85rem; color: var(--text-muted); margin-top: 3px; direction: rtl; }
+.ex-lv { font-size: .65rem; font-weight: 900; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px; letter-spacing: 0.5px; }
+.ex-lv.easy { background: rgba(46,204,113,0.15); color: var(--green); }
+.ex-lv.medium { background: rgba(255,140,66,0.15); color: var(--orange); }
+.ex-lv.hard { background: rgba(255,107,107,0.15); color: var(--coral); }
+.ex-lv.boss { background: linear-gradient(135deg, #1A1A2E, #9B59B6); color: #FFF; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(155,89,182, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(155,89,182, 0); } 100% { box-shadow: 0 0 0 0 rgba(155,89,182, 0); } }
+.ex-body { padding: 18px 22px; }
+
+/* ── FILL IN / DRAG & DROP ── */
+.fill-sentence { background: var(--block-bg); border-radius: 10px; padding: 13px 16px; margin-bottom: 10px; font-size: .95rem; line-height: 1.8; border: 2px solid var(--border-color); transition: .2s; }
+.fill-sentence.correct { border-color: var(--green); background: rgba(46,204,113,0.05); }
+.fill-sentence.wrong { border-color: var(--coral); background: rgba(255,107,107,0.05); }
+.word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; padding: 13px; background: var(--opt-bg); border-radius: 12px; }
+.wb-word { background: var(--card-bg); border: 2px solid var(--navy); border-radius: 20px; padding: 6px 16px; font-size: .85rem; font-weight: 700; cursor: grab; color: var(--text-main); transition: .2s; user-select: none; touch-action: none; -webkit-user-select: none; }
+.wb-word:active { cursor: grabbing; }
+.wb-word:hover { background: var(--navy); color: white; border-color: var(--navy); }
+.wb-word.used { opacity: .35; pointer-events: none; cursor: default; }
+.wb-word.dragging-touch { opacity: .35; }
+.touch-ghost { position: fixed; z-index: 9999; pointer-events: none; box-shadow: 0 8px 20px rgba(0,0,0,.35); transform: scale(1.08); background: var(--navy) !important; color: white !important; border-color: var(--navy) !important; }
+.blank { touch-action: none; display: inline-block; min-width: 130px; border-bottom: 3px solid var(--navy); text-align: center; font-weight: 800; color: var(--coral); padding: 0 8px; cursor: pointer; vertical-align: middle; border-radius: 4px; transition: .2s; }
+.blank.drag-over { border-bottom-color: var(--teal); background: rgba(78, 205, 196, 0.18); transform: scale(1.04); }
+.blank.filled { background: var(--navy); color: white; border-radius: 6px; border-bottom: none; padding: 2px 8px; cursor: grab; }
+.blank.filled:hover { background: var(--coral); }
+
+/* ── MATCH EXERCISE ── */
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.match-col h4 { font-size: .85rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px; text-align: center; }
+.match-item { background: var(--opt-bg); border: 2px solid var(--border-color); border-radius: 10px; padding: 12px 14px; text-align: center; cursor: pointer; font-size: .9rem; font-weight: 600; transition: .2s; margin-bottom: 8px; user-select: none; color: var(--text-main); }
+.match-item:hover { border-color: var(--blue); background: rgba(52,152,219,0.1); }
+.match-item.selected { border-color: var(--orange); background: var(--orange); color: white; transform: scale(1.02); }
+.match-item.matched-correct { border-color: var(--green); background: var(--green); color: white; pointer-events: none; opacity: 0.8; }
+.match-item.matched-wrong { border-color: var(--coral); background: var(--coral); color: white; animation: shake 0.4s; }
+@keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 50% {transform: translateX(5px);} 75% {transform: translateX(-5px);} }
+
+.mcq-block { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 2px solid var(--border-color); }
+.mcq-block:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
+.mcq-q { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; line-height: 1.5; }
+.mcq-q span { color: var(--coral); font-weight: 900; }
+.mcq-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media(max-width: 440px) { .mcq-options { grid-template-columns: 1fr; } }
+.mcq-opt { background: var(--opt-bg); border: 2px solid var(--border-color); border-radius: 10px; padding: 10px 14px; font-size: .9rem; cursor: pointer; transition: .2s; font-weight: 600; text-align: center; user-select: none; color: var(--text-main); }
+.mcq-opt:hover:not(.locked) { border-color: var(--blue); background: rgba(52,152,219,0.1); color: var(--blue); }
+.mcq-opt.correct { background: var(--green) !important; border-color: var(--green) !important; color: white !important; font-weight: 800; transform: scale(1.02); }
+.mcq-opt.wrong { background: var(--coral) !important; border-color: var(--coral) !important; color: white !important; }
+.mcq-opt.locked { pointer-events: none; }
+
+.quiz-score-box { background: linear-gradient(135deg, #1A1A2E, #4A0E4E); border-radius: 18px; padding: 30px; text-align: center; color: white; margin-bottom: 22px; display: none; box-shadow: 0 10px 30px rgba(74,14,78,0.4); border: 2px solid var(--gold); }
+.quiz-score-box .score-num { font-size: 3.5rem; font-weight: 900; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+.quiz-score-box .score-label { font-size: 1rem; opacity: .9; margin-top: 4px; font-weight: bold; }
+.quiz-score-box .score-msg { font-size: 1.2rem; font-weight: 800; margin-top: 15px; color: var(--gold); }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.btn { border: none; border-radius: 25px; cursor: pointer; font-size: .9rem; font-weight: 800; padding: 10px 24px; transition: .2s; font-family: inherit; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.btn:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+.btn:active { transform: translateY(0); }
+.btn-primary { background: linear-gradient(135deg, var(--coral), var(--orange)); }
+.btn-secondary { background: linear-gradient(135deg, var(--navy), var(--purple)); }
+.btn-reset { background: #6B7280; }
+.btn-boss { background: linear-gradient(135deg, #e74c3c, #8e44ad); font-size: 1rem; padding: 12px 30px; text-transform: uppercase; letter-spacing: 1px; }
+
+.score-line { font-size: .9rem; color: var(--text-muted); margin-bottom: 12px; font-weight: bold; }
+.score-line strong { color: var(--text-main); font-size: 1rem; }
+
+.progress-bar-ex { width: 100%; height: 10px; background: var(--border-color); border-radius: 5px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--coral), var(--gold)); border-radius: 5px; transition: width .4s cubic-bezier(0.4, 0.2, 0.2, 1); }
+
+.tr-btn { display: inline-flex; align-items: center; gap: 4px; background: linear-gradient(135deg, var(--teal), var(--blue)); border: none; border-radius: 20px; color: white; cursor: pointer; font-size: .75rem; font-weight: 700; padding: 5px 12px; margin-top: 6px; transition: .2s; font-family: inherit; }
+.tr-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.tr-tooltip { display: none; direction: rtl; background: var(--nav-bg); color: var(--gold); font-size: .9rem; font-weight: 700; padding: 10px 15px; border-radius: 10px; margin-top: 8px; text-align: right; line-height: 1.6; border-right: 4px solid var(--teal); }
+.tr-tooltip.show { display: block; animation: fadeSlide .2s ease; }
+
+.match-item .match-tr { display: none; font-size: .75rem; color: var(--gold); direction: rtl; background: rgba(0,0,0,0.4); border-radius: 6px; padding: 4px 8px; margin-top: 6px; font-weight: 700; width: 100%; text-align: center; }
+.match-tr-show .match-item .match-tr { display: block; }
+
+footer { background: var(--nav-bg); color: rgba(255,255,255,.6); text-align: center; padding: 16px; font-size: .8rem; margin-top: 40px; }
+footer span { display: block; margin-top: 4px; font-weight: bold; color: var(--gold); }
+
+@media(max-width:480px) {
+  .header-inner { padding: 8px 12px; }
+  .header-left h1 { font-size: .88rem; }
+  .hud-bar { padding: 5px 12px; gap: 8px; }
+}
+/* ══════════════ NEW: ONBOARDING / MODAL OVERLAYS ══════════════ */
+.ns-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(10,5,20,.75);
+  z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+  backdrop-filter: blur(3px);
+}
+.ns-overlay.show { display: flex; animation: fadeIn .3s ease; }
+.ns-card {
+  background: linear-gradient(160deg, #2E1F5E 0%, #1B1140 100%);
+  color: #EDE9FE; border-radius: 22px; padding: 28px 26px;
+  max-width: 440px; width: 100%; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  text-align: center; border-top: 4px solid var(--purple);
+}
+.ns-card h2 { font-size: 1.3rem; font-weight: 900; margin-bottom: 6px; color: #fff; }
+.ns-card p { color: #C9C3E0; }
+.ns-card input[type=text] {
+  width: 100%; padding: 12px 16px; border-radius: 25px; border: 2px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08); color: #fff; font-size: 1rem; font-weight: 700; margin: 14px 0;
+  font-family: inherit; outline: none; text-align:center;
+}
+.ns-card input[type=text]::placeholder { color: #A99FD1; }
+.ns-card input[type=text]:focus { border-color: var(--gold); }
+.opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.diff-opt, .avatar-opt {
+  display: flex; flex-direction: column; align-items: center; justify-content:center; gap: 8px;
+  background: rgba(255,255,255,.06); border: 2px solid rgba(255,255,255,.16); border-radius: 18px;
+  padding: 18px 10px; cursor: pointer; transition: .2s; font-weight: 800; font-size: .92rem;
+  color: #EDE9FE;
+}
+.diff-opt:hover, .avatar-opt:hover { border-color: var(--gold); background: rgba(255,255,255,.11); transform: translateY(-2px); }
+.diff-opt.picked, .avatar-opt.picked { border-color: var(--gold); background: rgba(255,217,61,.16); box-shadow: 0 4px 14px rgba(255,217,61,.3); }
+.avatar-opt .av-emoji { font-size: 2.4rem; }
+
+/* ══════════════ NEW: ACHIEVEMENTS ══════════════ */
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 12px; }
+.ach-card { background: var(--opt-bg); border-radius: 14px; padding: 14px 10px; text-align: center; border: 2px solid var(--border-color); transition:.2s; position:relative; }
+.ach-card.unlocked { border-color: var(--gold); background: linear-gradient(145deg, rgba(255,217,61,.15), rgba(255,140,66,.1)); }
+.ach-card.locked { opacity: .45; filter: grayscale(.6); }
+.ach-card .ach-icon { font-size: 2rem; margin-bottom: 6px; }
+.ach-card .ach-name { font-size: .8rem; font-weight: 800; }
+.ach-card .ach-desc { font-size: .68rem; color: var(--text-muted); margin-top: 3px; }
+
+/* ══════════════ NEW: TRUE/FALSE ══════════════ */
+.tf-card { background: var(--card-bg); border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.tf-statement { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+.tf-btn-row { display:flex; gap:10px; }
+.tf-btn { flex:1; padding: 10px; border-radius: 10px; border: 2px solid var(--border-color); background: var(--opt-bg); font-weight:800; cursor:pointer; font-family:inherit; color:var(--text-main); transition:.2s; }
+.tf-btn:hover:not(.locked) { transform: translateY(-2px); }
+.tf-btn.correct { background: var(--green) !important; border-color: var(--green) !important; color:white !important; }
+.tf-btn.wrong { background: var(--coral) !important; border-color: var(--coral) !important; color:white !important; }
+.tf-btn.locked { pointer-events:none; }
+.tf-explain { display:none; margin-top:10px; padding: 10px 14px; background: var(--block-bg); border-radius: 10px; font-size: .85rem; border-right: 4px solid var(--teal); }
+.tf-explain.show { display:block; animation: fadeSlide .2s ease; }
+
+/* ══════════════ NEW: OPEN QUESTIONS ══════════════ */
+.oq-card { background: var(--card-bg); border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.oq-q { font-weight: 800; font-size: 1rem; margin-bottom: 10px; }
+.oq-textarea { width:100%; min-height: 90px; border-radius: 10px; border: 2px solid var(--border-color); background: var(--block-bg); color: var(--text-main); padding: 10px 14px; font-family: inherit; font-size: .9rem; resize: vertical; outline:none; }
+.oq-textarea:focus { border-color: var(--teal); }
+.oq-model { display:none; margin-top: 10px; background: rgba(78,205,196,.1); border-right: 4px solid var(--teal); padding: 10px 14px; border-radius: 10px; font-size:.88rem; }
+.oq-model.show { display:block; }
+.oq-eval { display:flex; gap:8px; margin-top:10px; }
+.oq-eval button { border:none; border-radius:20px; padding:6px 14px; font-size:.8rem; font-weight:700; cursor:pointer; background: var(--opt-bg); color:var(--text-main); font-family:inherit; }
+.oq-eval button.picked { background: var(--teal); color:white; }
+
+/* ══════════════ NEW: SPEED / TIMER ══════════════ */
+.timer-display { font-size: 2rem; font-weight: 900; color: var(--coral); text-align:center; margin-bottom: 10px; }
+.timer-display.urgent { color: var(--red); animation: streakPulse .5s infinite; }
+.speed-q-box { display:none; }
+.speed-q-box.active { display:block; }
+.speed-result-line { font-size:1.1rem; font-weight:800; text-align:center; margin-top:10px; }
+
+/* ══════════════ NEW: BOSS HEALTH BAR ══════════════ */
+.boss-health-wrap { background: var(--block-bg); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; }
+.boss-health-label { display:flex; justify-content:space-between; font-size:.8rem; font-weight:800; margin-bottom:6px; }
+.boss-health-bar { height: 18px; background: var(--border-color); border-radius: 10px; overflow:hidden; }
+.boss-health-fill { height:100%; background: linear-gradient(90deg,#22C55E,#EF4444); transition: width .4s ease; }
+.boss-stage-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+.boss-stage-tag { font-size:.65rem; font-weight:800; padding:3px 10px; border-radius:20px; background: var(--opt-bg); color: var(--text-muted); }
+.boss-stage-tag.done { background: var(--green); color:white; }
+
+/* ══════════════ NEW: RESULTS DASHBOARD ══════════════ */
+.res-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 12px; margin-bottom: 20px; }
+.res-stat { background: var(--card-bg); border-radius: 14px; padding: 16px; text-align:center; box-shadow: var(--shadow); }
+.res-stat .res-val { font-size: 1.5rem; font-weight: 900; color: var(--coral); }
+.res-stat .res-lbl { font-size: .72rem; color: var(--text-muted); font-weight:700; margin-top:2px; }
+.res-bar-row { margin-bottom: 12px; }
+.res-bar-row .res-bar-lbl { display:flex; justify-content:space-between; font-size:.82rem; font-weight:700; margin-bottom:4px; }
+.res-bar-track { height:12px; background: var(--border-color); border-radius:6px; overflow:hidden; }
+.res-bar-fill { height:100%; background: linear-gradient(90deg,var(--teal),var(--blue)); border-radius:6px; transition: width .6s ease; }
+
+/* ══════════════ NEW: CERTIFICATE ══════════════ */
+#cert-canvas { max-width:100%; border-radius: 10px; box-shadow: var(--shadow); margin: 14px 0; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <h1>🪥 U10 Vocabulary — Who Used My Toothpaste? | مفردات الوحدة العاشرة: من استخدم معجون أسناني؟</h1>
+      <div class="sub">Words &amp; Meanings &nbsp;•&nbsp; Exercises &nbsp;•&nbsp; Teacher Jaber</div>
+    </div>
+    <div class="header-right">
+      <button class="hdr-btn" id="avatar-chip-btn" onclick="openAvatarPicker()">🎭 <span id="avatar-chip-display">Avatar</span></button>
+      <button class="hdr-btn" onclick="toggleEasyMode()" id="easy-toggle-btn">💡 Easy Mode: OFF</button>
+      <button class="dark-toggle" onclick="toggleTheme()" id="dark-btn">🌙 Dark Mode</button>
+      <button class="hdr-btn" style="background:rgba(239,68,68,.25);border-color:rgba(239,68,68,.5)" onclick="confirmResetProgress()">🗑 Reset</button>
+      <span class="header-badge">Super Goal 3</span>
+    </div>
+  </div>
+  <div class="hud-bar">
+    <div class="hud-item">⚡ XP: <span class="xp-badge" id="xp-display">0</span></div>
+    <div class="hud-item">🪙 <span class="coin-badge" id="coin-display">0</span></div>
+    <div class="hud-item"><span id="streak-icon">🔥</span> Streak: <span class="streak-badge" id="streak-display">0</span></div>
+    <div class="hud-item">✅ Score: <span class="level-badge" id="correct-display" style="background:var(--green)">0</span></div>
+    <div class="hud-item"><span class="rank-badge" id="rank-display">🌱 New Learner</span></div>
+    <div style="flex:1;min-width:80px;">
+      <div class="progress-container"><div id="main-progress" class="progress-bar"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="xp-toast" id="xp-toast">+10 XP ⭐</div>
+<div id="badgeToast"></div>
+
+<nav class="nav-tabs" id="nav-tabs">
+  <button class="active" onclick="showTab(0)">📋 Words &amp; Meanings</button>
+  <button onclick="showTab(1)">🎯 Fill in Blanks</button>
+  <button onclick="showTab(2)">🔗 Matching</button>
+  <button onclick="showTab(3)">✅ MCQ Quiz</button>
+  <button onclick="showTab(4)">🎯 Vocabulary Challenge</button>
+  <button onclick="showTab(5)">✅ True / False</button>
+  <button onclick="showTab(6)">⚡ Speed Challenge</button>
+  <button onclick="showTab(7)">💬 Open Questions</button>
+  <button onclick="showTab(8)">👾 Boss Challenge</button>
+  <button onclick="showTab(9)">🏆 My Results</button>
+</nav>
+
+<div class="container">
+
+  <div class="player-card">
+    <span>👤</span>
+    <input type="text" id="student-name" placeholder="أدخل اسمك يا بطل (اختياري)..." autocomplete="off" autocorrect="off" spellcheck="false" maxlength="30" oninput="onNameInput()">
+    <span id="hud-avatar-inline" style="font-size:1.4rem;"></span>
+  </div>
+
+  <!-- TAB 0 — Words & Meanings -->
+  <div class="page active" id="tab-0">
+    <div class="section-title"><h2>Words &amp; Meanings</h2><span class="tag">الكلمات ومعانيها</span></div>
+    <p style="font-size:.9rem;color:var(--text-muted);margin-bottom:16px;direction:rtl;text-align:right">
+      💡 انقر على البطاقة لقلبها ومعرفة المعنى، أو اضغط رمز الصوت للاستماع
+    </p>
+
+    <!-- BATHROOM ITEMS / NOUNS -->
+    <div class="cat-header"><span class="icon">🛁</span><h3>أسماء — Bathroom Items &amp; Nouns</h3><div class="line"></div></div>
+    <div class="vocab-grid">
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Complaint</div><button class="audio-btn" onclick="event.stopPropagation();speak('Complaint')">🔊</button></div><div class="vocab-card-back"><div class="arabic">شكوى</div><div class="example">She filed a complaint about the noise.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Dishwashing liquid</div><button class="audio-btn" onclick="event.stopPropagation();speak('Dishwashing liquid')">🔊</button></div><div class="vocab-card-back"><div class="arabic">سائل غسيل الصحون</div><div class="example">We ran out of dishwashing liquid.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Hairbrush</div><button class="audio-btn" onclick="event.stopPropagation();speak('Hairbrush')">🔊</button></div><div class="vocab-card-back"><div class="arabic">فرشاة الشعر</div><div class="example">She used a hairbrush to fix her hair.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Hair dryer</div><button class="audio-btn" onclick="event.stopPropagation();speak('Hair dryer')">🔊</button></div><div class="vocab-card-back"><div class="arabic">مجفف الشعر</div><div class="example">He dried his hair with a hair dryer.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Mess</div><button class="audio-btn" onclick="event.stopPropagation();speak('Mess')">🔊</button></div><div class="vocab-card-back"><div class="arabic">فوضى</div><div class="example">Look at this mess in your room!</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Mirror</div><button class="audio-btn" onclick="event.stopPropagation();speak('Mirror')">🔊</button></div><div class="vocab-card-back"><div class="arabic">مرآة</div><div class="example">She checked her hair in the mirror.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Nail polish</div><button class="audio-btn" onclick="event.stopPropagation();speak('Nail polish')">🔊</button></div><div class="vocab-card-back"><div class="arabic">طلاء الأظافر</div><div class="example">She painted her nails with red nail polish.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Nephew</div><button class="audio-btn" onclick="event.stopPropagation();speak('Nephew')">🔊</button></div><div class="vocab-card-back"><div class="arabic">ابن الأخ / الأخت</div><div class="example">My nephew is visiting us this weekend.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Scissors</div><button class="audio-btn" onclick="event.stopPropagation();speak('Scissors')">🔊</button></div><div class="vocab-card-back"><div class="arabic">مقص</div><div class="example">Use the scissors to cut the paper.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Shampoo</div><button class="audio-btn" onclick="event.stopPropagation();speak('Shampoo')">🔊</button></div><div class="vocab-card-back"><div class="arabic">شامبو</div><div class="example">He washed his hair with shampoo.</div></div></div></div>
+      <div class="vocab-card noun" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Noun</div><div class="word">Toothpaste</div><button class="audio-btn" onclick="event.stopPropagation();speak('Toothpaste')">🔊</button></div><div class="vocab-card-back"><div class="arabic">معجون أسنان</div><div class="example">Don't forget to buy toothpaste.</div></div></div></div>
+    </div>
+
+    <!-- VERBS & PHRASES -->
+    <div class="cat-header"><span class="icon">🏃</span><h3>أفعال وعبارات — Everyday Verbs &amp; Phrases</h3><div class="line"></div></div>
+    <div class="vocab-grid">
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Annoy</div><button class="audio-btn" onclick="event.stopPropagation();speak('Annoy')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يزعج</div><div class="example">Loud noises really annoy me.</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Avoid</div><button class="audio-btn" onclick="event.stopPropagation();speak('Avoid')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يتجنب</div><div class="example">You should avoid junk food.</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Borrow</div><button class="audio-btn" onclick="event.stopPropagation();speak('Borrow')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يستعير</div><div class="example">Can I borrow your pen?</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Feed</div><button class="audio-btn" onclick="event.stopPropagation();speak('Feed')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يطعم</div><div class="example">Please feed the cat before school.</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Finish</div><button class="audio-btn" onclick="event.stopPropagation();speak('Finish')">🔊</button></div><div class="vocab-card-back"><div class="arabic">ينهي</div><div class="example">Finish your homework before dinner.</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Imagine</div><button class="audio-btn" onclick="event.stopPropagation();speak('Imagine')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يتخيل</div><div class="example">Imagine living on the moon!</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Irritate</div><button class="audio-btn" onclick="event.stopPropagation();speak('Irritate')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يزعج / يضايق</div><div class="example">His constant talking irritates me.</div></div></div></div>
+      <div class="vocab-card verb" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Verb</div><div class="word">Mind</div><button class="audio-btn" onclick="event.stopPropagation();speak('Mind')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يمانع</div><div class="example">Do you mind if I open the window?</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">Blow up</div><button class="audio-btn" onclick="event.stopPropagation();speak('Blow up')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يفقد أعصابه</div><div class="example">He blew up when he saw the mess.</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">Clean up</div><button class="audio-btn" onclick="event.stopPropagation();speak('Clean up')">🔊</button></div><div class="vocab-card-back"><div class="arabic">ينظف</div><div class="example">Clean up your room before dinner.</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">Give back</div><button class="audio-btn" onclick="event.stopPropagation();speak('Give back')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يعيد الشيء</div><div class="example">Please give back my book.</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">Give up</div><button class="audio-btn" onclick="event.stopPropagation();speak('Give up')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يستسلم</div><div class="example">Don't give up on your dreams.</div></div></div></div>
+    </div>
+
+    <!-- EXPRESSIONS & ADDITIONAL -->
+    <div class="cat-header"><span class="icon">💬</span><h3>تعبيرات وإضافات — Expressions &amp; Additional</h3><div class="line"></div></div>
+    <div class="vocab-grid">
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">At long last</div><button class="audio-btn" onclick="event.stopPropagation();speak('At long last')">🔊</button></div><div class="vocab-card-back"><div class="arabic">أخيرًا</div><div class="example">At long last, the exams are over!</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">A bit too much</div><button class="audio-btn" onclick="event.stopPropagation();speak('A bit too much')">🔊</button></div><div class="vocab-card-back"><div class="arabic">مبالغ فيه</div><div class="example">That joke was a bit too much.</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">Put back</div><button class="audio-btn" onclick="event.stopPropagation();speak('Put back')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يعيده لمكانه</div><div class="example">Please put back the book on the shelf.</div></div></div></div>
+      <div class="vocab-card phrase" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Phrase</div><div class="word">Turn off</div><button class="audio-btn" onclick="event.stopPropagation();speak('Turn off')">🔊</button></div><div class="vocab-card-back"><div class="arabic">يطفئ</div><div class="example">Turn off the lights before you leave.</div></div></div></div>
+      <div class="vocab-card adj" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Adjective</div><div class="word">Dirty</div><button class="audio-btn" onclick="event.stopPropagation();speak('Dirty')">🔊</button></div><div class="vocab-card-back"><div class="arabic">متسخ</div><div class="example">Your shoes are very dirty.</div></div></div></div>
+      <div class="vocab-card adj" onclick="this.classList.toggle('flipped')"><div class="vocab-card-inner"><div class="vocab-card-front"><div class="type-badge">Adverb</div><div class="word">Already</div><button class="audio-btn" onclick="event.stopPropagation();speak('Already')">🔊</button></div><div class="vocab-card-back"><div class="arabic">بالفعل</div><div class="example">I've already finished my homework.</div></div></div></div>
+    </div>
+  </div>
+
+  <!-- TAB 1 — Fill in the Blanks -->
+  <div class="page" id="tab-1">
+    <div class="section-title"><h2>Fill in the Blanks</h2><span class="tag">أكمل الفراغ بالكلمة المناسبة</span></div>
+
+    <div class="ex-card">
+      <div class="ex-head">
+        <h3>Exercise A — Complete with the correct word</h3>
+        <p>اسحب الكلمة المناسبة من بنك الكلمات وأفلتها في الفراغ. اسحب كلمة جديدة فوق فراغ ممتلئ لتغيير الإجابة، أو انقر على الفراغ الممتلئ لإفراغه.</p>
+        <span class="ex-lv easy">BEGINNER</span>
+      </div>
+      <div class="ex-body">
+        <div class="word-bank" id="wb-a">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <div class="wb-word" draggable="true" data-word="borrow" ondragstart="dragStart(event)">borrow</div>
+            <div class="wb-word-tr" style="font-size:.7rem;color:#888;direction:rtl;display:none">يستعير</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <div class="wb-word" draggable="true" data-word="toothpaste" ondragstart="dragStart(event)">toothpaste</div>
+            <div class="wb-word-tr" style="font-size:.7rem;color:#888;direction:rtl;display:none">معجون أسنان</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <div class="wb-word" draggable="true" data-word="mirror" ondragstart="dragStart(event)">mirror</div>
+            <div class="wb-word-tr" style="font-size:.7rem;color:#888;direction:rtl;display:none">مرآة</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <div class="wb-word" draggable="true" data-word="finish" ondragstart="dragStart(event)">finish</div>
+            <div class="wb-word-tr" style="font-size:.7rem;color:#888;direction:rtl;display:none">ينهي</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <div class="wb-word" draggable="true" data-word="mess" ondragstart="dragStart(event)">mess</div>
+            <div class="wb-word-tr" style="font-size:.7rem;color:#888;direction:rtl;display:none">فوضى</div>
+          </div>
+          <button class="tr-btn" style="margin-top:4px" onclick="toggleWbTr(this)">🌐 ترجمة الكلمات</button>
+        </div>
+
+        <button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button>
+        <div class="tr-tooltip">١. أحتاج إلى الذهاب إلى المتجر لشراء ___________ لأسناني.</div>
+        <div class="fill-sentence" id="fs1">
+          1. I need to go to the shop to buy
+          <span class="blank" id="b1" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dropWord(event, 'b1')" onclick="clearBlank('b1')">___________</span>
+          for my teeth.
+          <button class="audio-btn" onclick="speak('I need to go to the shop to buy toothpaste for my teeth.')">🔊</button>
+        </div>
+
+        <button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button>
+        <div class="tr-tooltip">٢. هل يمكنني ___________ قلمك لثانية؟</div>
+        <div class="fill-sentence" id="fs2">
+          2. Can I
+          <span class="blank" id="b2" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dropWord(event, 'b2')" onclick="clearBlank('b2')">___________</span>
+          your pen for a second?
+          <button class="audio-btn" onclick="speak('Can I borrow your pen for a second?')">🔊</button>
+        </div>
+
+        <button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button>
+        <div class="tr-tooltip">٣. من فضلك انظر في ___________ لتصليح شعرك.</div>
+        <div class="fill-sentence" id="fs3">
+          3. Please look in the
+          <span class="blank" id="b3" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dropWord(event, 'b3')" onclick="clearBlank('b3')">___________</span>
+          to fix your hair.
+          <button class="audio-btn" onclick="speak('Please look in the mirror to fix your hair.')">🔊</button>
+        </div>
+
+        <button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button>
+        <div class="tr-tooltip">٤. يجب أن ___________ واجبك قبل أن تخرج.</div>
+        <div class="fill-sentence" id="fs4">
+          4. You must
+          <span class="blank" id="b4" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dropWord(event, 'b4')" onclick="clearBlank('b4')">___________</span>
+          your homework before you go out.
+          <button class="audio-btn" onclick="speak('You must finish your homework before you go out.')">🔊</button>
+        </div>
+
+        <button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button>
+        <div class="tr-tooltip">٥. انظر إلى هذه ___________! تحتاج إلى تنظيف غرفتك.</div>
+        <div class="fill-sentence" id="fs5">
+          5. Look at this
+          <span class="blank" id="b5" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dropWord(event, 'b5')" onclick="clearBlank('b5')">___________</span>!
+          You need to clean your room.
+          <button class="audio-btn" onclick="speak('Look at this mess! You need to clean your room.')">🔊</button>
+        </div>
+
+        <div class="btn-row" style="margin-top:16px">
+          <button class="btn btn-primary" onclick="checkFill()">✓ Check Answers</button>
+          <button class="btn btn-reset" onclick="resetFill()">↺ Reset</button>
+        </div>
+        <div id="fill-result" style="font-size:.95rem;font-weight:700;margin-top:8px;display:none"></div>
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-head">
+        <h3>Exercise B — Choose the correct word</h3>
+        <p>اختر الكلمة المناسبة لإكمال الجملة</p>
+        <span class="ex-lv medium">INTERMEDIATE</span>
+      </div>
+      <div class="ex-body">
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="revealFill2(this)">▶ Reveal answers</button>
+          <button class="btn btn-reset" onclick="resetFill2()">↺ Reset</button>
+        </div>
+        <div class="score-line">Score: <strong id="f2-score">0 / 5</strong></div>
+
+        <div class="mcq-block">
+          <div class="mcq-q">1. Loud noises really _______ me. <button class="audio-btn" onclick="speak('Loud noises really annoy me.')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">١. الأصوات العالية حقًا _______ني.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-q="f2-1" data-correct="true" onclick="pickF2(this)">annoy</div>
+            <div class="mcq-opt" data-q="f2-1" onclick="pickF2(this)">avoid</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">2. You should _______ junk food. <button class="audio-btn" onclick="speak('You should avoid junk food.')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">٢. يجب أن _______ الطعام غير الصحي.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-q="f2-2" data-correct="true" onclick="pickF2(this)">avoid</div>
+            <div class="mcq-opt" data-q="f2-2" onclick="pickF2(this)">borrow</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">3. Can I _______ your pen? <button class="audio-btn" onclick="speak('Can I borrow your pen?')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">٣. هل يمكنني _______ قلمك؟</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-q="f2-3" data-correct="true" onclick="pickF2(this)">borrow</div>
+            <div class="mcq-opt" data-q="f2-3" onclick="pickF2(this)">give back</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">4. Please _______ the cat before school. <button class="audio-btn" onclick="speak('Please feed the cat before school.')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">٤. من فضلك _______ القطة قبل المدرسة.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-q="f2-4" onclick="pickF2(this)">imagine</div>
+            <div class="mcq-opt" data-q="f2-4" data-correct="true" onclick="pickF2(this)">feed</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">5. Don't _______ on your dreams. <button class="audio-btn" onclick="speak('Do not give up on your dreams.')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">٥. لا _______ على أحلامك.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-q="f2-5" data-correct="true" onclick="pickF2(this)">give up</div>
+            <div class="mcq-opt" data-q="f2-5" onclick="pickF2(this)">give back</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2 — Matching -->
+  <div class="page" id="tab-2">
+    <div class="section-title"><h2>Matching</h2><span class="tag">طابق العبارات والكلمات بمعانيها</span></div>
+
+    <div class="ex-card">
+      <div class="ex-head">
+        <h3>Match the phrases with their meaning</h3>
+        <p>اضغط على العبارة ثم على معناها الصحيح</p>
+        <span class="ex-lv medium">INTERMEDIATE</span>
+      </div>
+      <div class="ex-body">
+        <div class="btn-row">
+          <button class="btn btn-reset" onclick="resetMatch()">↺ Reset Matches</button>
+        </div>
+        <div class="score-line">Matched: <strong id="match-score">0 / 8</strong></div>
+        <div class="match-grid">
+          <div id="match1-left">
+            <h4>Phrases</h4>
+            <button class="tr-btn" style="margin-bottom:8px;width:100%" onclick="toggleColTr('match1-left', this)">🌐 ترجمة</button>
+            <div class="match-item" data-id="m1" onclick="selectMatch(this,'left')">At long last <button class="audio-btn" onclick="event.stopPropagation();speak('At long last')">🔊</button><span class="match-tr">أخيرًا</span></div>
+            <div class="match-item" data-id="m2" onclick="selectMatch(this,'left')">That's a bit too much <button class="audio-btn" onclick="event.stopPropagation();speak('That is a bit too much')">🔊</button><span class="match-tr">هذا مبالغ فيه</span></div>
+            <div class="match-item" data-id="m3" onclick="selectMatch(this,'left')">let out <button class="audio-btn" onclick="event.stopPropagation();speak('let out')">🔊</button><span class="match-tr">يعبّر بحرية</span></div>
+            <div class="match-item" data-id="m4" onclick="selectMatch(this,'left')">find out <button class="audio-btn" onclick="event.stopPropagation();speak('find out')">🔊</button><span class="match-tr">يكتشف / يعرف</span></div>
+            <div class="match-item" data-id="m5" onclick="selectMatch(this,'left')">clean up <button class="audio-btn" onclick="event.stopPropagation();speak('clean up')">🔊</button><span class="match-tr">ينظف / يرتب</span></div>
+            <div class="match-item" data-id="m6" onclick="selectMatch(this,'left')">give back <button class="audio-btn" onclick="event.stopPropagation();speak('give back')">🔊</button><span class="match-tr">يعيد</span></div>
+            <div class="match-item" data-id="m7" onclick="selectMatch(this,'left')">call up <button class="audio-btn" onclick="event.stopPropagation();speak('call up')">🔊</button><span class="match-tr">يتصل هاتفيًا</span></div>
+            <div class="match-item" data-id="m8" onclick="selectMatch(this,'left')">give up <button class="audio-btn" onclick="event.stopPropagation();speak('give up')">🔊</button><span class="match-tr">يسمح لشخص بأخذ شيء</span></div>
+          </div>
+          <div id="match1-right">
+            <h4>Meaning</h4>
+            <button class="tr-btn" style="margin-bottom:8px;width:100%" onclick="toggleColTr('match1-right', this)">🌐 ترجمة</button>
+            <div class="match-item" data-id="m8" onclick="selectMatch(this,'right')">let someone have<span class="match-tr">يسمح لشخص بأخذ شيء</span></div>
+            <div class="match-item" data-id="m7" onclick="selectMatch(this,'right')">phone<span class="match-tr">يتصل هاتفيًا</span></div>
+            <div class="match-item" data-id="m6" onclick="selectMatch(this,'right')">return<span class="match-tr">يعيد</span></div>
+            <div class="match-item" data-id="m5" onclick="selectMatch(this,'right')">make things neat<span class="match-tr">ينظف / يرتب</span></div>
+            <div class="match-item" data-id="m4" onclick="selectMatch(this,'right')">learn<span class="match-tr">يكتشف / يعرف</span></div>
+            <div class="match-item" data-id="m3" onclick="selectMatch(this,'right')">express yourself freely<span class="match-tr">يعبّر بحرية</span></div>
+            <div class="match-item" data-id="m2" onclick="selectMatch(this,'right')">This has gone too far<span class="match-tr">هذا تجاوز الحد</span></div>
+            <div class="match-item" data-id="m1" onclick="selectMatch(this,'right')">Finally!<span class="match-tr">أخيرًا!</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-head">
+        <h3>Match English ↔ Arabic (Verbs)</h3>
+        <p>صل كل فعل إنجليزي بمعناه العربي</p>
+        <span class="ex-lv easy">BEGINNER</span>
+      </div>
+      <div class="ex-body">
+        <div class="btn-row">
+          <button class="btn btn-reset" onclick="resetMatch2()">↺ Reset Matches</button>
+        </div>
+        <div class="score-line">Matched: <strong id="match2-score">0 / 6</strong></div>
+        <div class="match-grid">
+          <div id="match2-left">
+            <h4>English</h4>
+            <button class="tr-btn" style="margin-bottom:8px;width:100%" onclick="toggleColTr('match2-left', this)">🌐 ترجمة</button>
+            <div class="match-item" data-id="n1" onclick="selectMatch2(this,'left')">Borrow <button class="audio-btn" onclick="event.stopPropagation();speak('Borrow')">🔊</button><span class="match-tr">يستعير</span></div>
+            <div class="match-item" data-id="n2" onclick="selectMatch2(this,'left')">Avoid <button class="audio-btn" onclick="event.stopPropagation();speak('Avoid')">🔊</button><span class="match-tr">يتجنب</span></div>
+            <div class="match-item" data-id="n3" onclick="selectMatch2(this,'left')">Feed <button class="audio-btn" onclick="event.stopPropagation();speak('Feed')">🔊</button><span class="match-tr">يطعم</span></div>
+            <div class="match-item" data-id="n4" onclick="selectMatch2(this,'left')">Imagine <button class="audio-btn" onclick="event.stopPropagation();speak('Imagine')">🔊</button><span class="match-tr">يتخيل</span></div>
+            <div class="match-item" data-id="n5" onclick="selectMatch2(this,'left')">Irritate <button class="audio-btn" onclick="event.stopPropagation();speak('Irritate')">🔊</button><span class="match-tr">يزعج / يضايق</span></div>
+            <div class="match-item" data-id="n6" onclick="selectMatch2(this,'left')">Mind <button class="audio-btn" onclick="event.stopPropagation();speak('Mind')">🔊</button><span class="match-tr">يمانع</span></div>
+          </div>
+          <div>
+            <h4>Arabic</h4>
+            <div class="match-item" data-id="n5" onclick="selectMatch2(this,'right')" style="direction:rtl">يزعج / يضايق</div>
+            <div class="match-item" data-id="n2" onclick="selectMatch2(this,'right')" style="direction:rtl">يتجنب</div>
+            <div class="match-item" data-id="n6" onclick="selectMatch2(this,'right')" style="direction:rtl">يمانع</div>
+            <div class="match-item" data-id="n1" onclick="selectMatch2(this,'right')" style="direction:rtl">يستعير</div>
+            <div class="match-item" data-id="n4" onclick="selectMatch2(this,'right')" style="direction:rtl">يتخيل</div>
+            <div class="match-item" data-id="n3" onclick="selectMatch2(this,'right')" style="direction:rtl">يطعم</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3 — MCQ Quiz -->
+  <div class="page" id="tab-3">
+    <div class="section-title"><h2>MCQ Quiz</h2><span class="tag">اختيار من متعدد</span></div>
+    <div class="ex-card">
+      <div class="ex-head">
+        <h3>Choose the correct answer</h3>
+        <p>اختر الإجابة الصحيحة — النتيجة تظهر فوراً</p>
+        <span class="ex-lv hard">ADVANCED</span>
+      </div>
+      <div class="ex-body">
+        <div class="progress-bar-ex"><div class="progress-fill" id="mcq-progress" style="width:0%"></div></div>
+        <div class="score-line">Score: <strong id="mcq-score">0 / 8</strong></div>
+
+        <div class="mcq-block">
+          <div class="mcq-q">Q1. <span>"Complaint"</span> means: <button class="audio-btn" onclick="speak('Complaint')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Complaint" تعني: (اختر من الخيارات)</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q1" data-correct="true" onclick="pickMCQ(this)">شكوى</div>
+            <div class="mcq-opt" data-qid="q1" onclick="pickMCQ(this)">فوضى</div>
+            <div class="mcq-opt" data-qid="q1" onclick="pickMCQ(this)">مرآة</div>
+            <div class="mcq-opt" data-qid="q1" onclick="pickMCQ(this)">شامبو</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q2. Which word means <span>"يتجنب"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي كلمة تعني "يتجنب"؟</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q2" data-correct="true" onclick="pickMCQ(this)">Avoid</div>
+            <div class="mcq-opt" data-qid="q2" onclick="pickMCQ(this)">Borrow</div>
+            <div class="mcq-opt" data-qid="q2" onclick="pickMCQ(this)">Feed</div>
+            <div class="mcq-opt" data-qid="q2" onclick="pickMCQ(this)">Mind</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q3. <span>"Mess"</span> means: <button class="audio-btn" onclick="speak('Mess')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Mess" تعني: (اختر من الخيارات)</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q3" data-correct="true" onclick="pickMCQ(this)">فوضى</div>
+            <div class="mcq-opt" data-qid="q3" onclick="pickMCQ(this)">شكوى</div>
+            <div class="mcq-opt" data-qid="q3" onclick="pickMCQ(this)">مرآة</div>
+            <div class="mcq-opt" data-qid="q3" onclick="pickMCQ(this)">مقص</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q4. Which phrase means <span>"يفقد أعصابه"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي عبارة تعني "يفقد أعصابه / يغضب فجأة"؟</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q4" data-correct="true" onclick="pickMCQ(this)">Blow up</div>
+            <div class="mcq-opt" data-qid="q4" onclick="pickMCQ(this)">Clean up</div>
+            <div class="mcq-opt" data-qid="q4" onclick="pickMCQ(this)">Give back</div>
+            <div class="mcq-opt" data-qid="q4" onclick="pickMCQ(this)">Give up</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q5. <span>"Nephew"</span> means: <button class="audio-btn" onclick="speak('Nephew')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Nephew" تعني: (اختر من الخيارات)</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q5" data-correct="true" onclick="pickMCQ(this)">ابن الأخ أو الأخت</div>
+            <div class="mcq-opt" data-qid="q5" onclick="pickMCQ(this)">الجد</div>
+            <div class="mcq-opt" data-qid="q5" onclick="pickMCQ(this)">العم</div>
+            <div class="mcq-opt" data-qid="q5" onclick="pickMCQ(this)">الخال</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q6. Which word means <span>"يطعم"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي كلمة تعني "يطعم"؟</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q6" data-correct="true" onclick="pickMCQ(this)">Feed</div>
+            <div class="mcq-opt" data-qid="q6" onclick="pickMCQ(this)">Annoy</div>
+            <div class="mcq-opt" data-qid="q6" onclick="pickMCQ(this)">Avoid</div>
+            <div class="mcq-opt" data-qid="q6" onclick="pickMCQ(this)">Mind</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q7. <span>"Already"</span> means: <button class="audio-btn" onclick="speak('Already')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Already" تعني: (اختر من الخيارات)</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q7" data-correct="true" onclick="pickMCQ(this)">بالفعل</div>
+            <div class="mcq-opt" data-qid="q7" onclick="pickMCQ(this)">أخيرًا</div>
+            <div class="mcq-opt" data-qid="q7" onclick="pickMCQ(this)">متسخ</div>
+            <div class="mcq-opt" data-qid="q7" onclick="pickMCQ(this)">مبالغ فيه</div>
+          </div>
+        </div>
+        <div class="mcq-block">
+          <div class="mcq-q">Q8. <span>"Dirty"</span> means: <button class="audio-btn" onclick="speak('Dirty')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Dirty" تعني: (اختر من الخيارات)</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" data-qid="q8" data-correct="true" onclick="pickMCQ(this)">متسخ</div>
+            <div class="mcq-opt" data-qid="q8" onclick="pickMCQ(this)">نظيف</div>
+            <div class="mcq-opt" data-qid="q8" onclick="pickMCQ(this)">فارغ</div>
+            <div class="mcq-opt" data-qid="q8" onclick="pickMCQ(this)">جديد</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4 — Vocabulary Challenge (NEW) -->
+  <div class="page" id="tab-4">
+    <div class="section-title"><h2>🎯 Vocabulary Challenge</h2><span class="tag">ثلاث جولات لاختبار مفرداتك</span></div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>Round 1 — Match Word to Meaning</h3><p>اضغط على الكلمة ثم على معناها الصحيح</p><span class="ex-lv easy">ROUND 1</span></div>
+      <div class="ex-body">
+        <div class="btn-row"><button class="btn btn-reset" onclick="resetVCMatch()">↺ Reset Round 1</button></div>
+        <div class="score-line">Matched: <strong id="vc-match-score">0 / 8</strong></div>
+        <div class="match-grid"><div id="vc-match-left"><h4>Word</h4></div><div id="vc-match-right"><h4>Meaning</h4></div></div>
+      </div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>Round 2 — Listen and Choose 🔊</h3><p>استمع إلى الكلمة ثم اختر معناها الصحيح</p><span class="ex-lv medium">ROUND 2</span></div>
+      <div class="ex-body">
+        <div class="score-line">Score: <strong id="vc-listen-score">0 / 6</strong></div>
+        <div id="vc-listen-container"></div>
+        <div class="btn-row"><button class="btn btn-reset" onclick="resetVCListen()">↺ Reset Round 2</button></div>
+      </div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>Round 3 — Speed Round ⚡</h3><p>٤٥ ثانية فقط! أجب بسرعة لتحصل على نقاط ومكافآت إضافية</p><span class="ex-lv hard">ROUND 3</span></div>
+      <div class="ex-body">
+        <div class="timer-display" id="vc-speed-timer">45</div>
+        <div class="score-line">Score: <strong id="vc-speed-score">0 / 0</strong></div>
+        <div class="btn-row"><button class="btn btn-primary" id="vc-speed-start" onclick="startVCSpeed()">▶ Start Speed Round</button></div>
+        <div id="vc-speed-container"></div>
+        <div class="speed-result-line" id="vc-speed-result" style="display:none;"></div>
+      </div>
+    </div>
+    <div class="quiz-score-box" id="vc-final-box">
+      <div class="score-num" id="vc-final-num">0</div>
+      <div class="score-label">Total Vocabulary Challenge Score</div>
+      <div class="score-msg" id="vc-final-msg"></div>
+    </div>
+  </div>
+
+  <!-- TAB 5 — True / False (NEW) -->
+  <div class="page" id="tab-5">
+    <div class="section-title"><h2>✅ True / False</h2><span class="tag">صح أم خطأ</span></div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>Read each statement and decide</h3><p>اقرأ كل جملة وحدد إن كانت صحيحة أم خاطئة، ثم اطّلع على التفسير</p><span class="ex-lv medium">VOCABULARY IN CONTEXT</span></div>
+      <div class="ex-body">
+        <div class="score-line">Score: <strong id="tf-score">0 / 10</strong></div>
+        <div class="progress-bar-ex"><div class="progress-fill" id="tf-progress" style="width:0%"></div></div>
+        <div id="tf-container"></div>
+        <div class="btn-row"><button class="btn btn-reset" onclick="resetTF()">↺ Reset</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6 — Speed Challenge (NEW) -->
+  <div class="page" id="tab-6">
+    <div class="section-title"><h2>⚡ Speed Challenge</h2><span class="tag">تحدي السرعة</span></div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>60-Second Mixed Challenge</h3><p>أسئلة عشوائية متنوعة — كلما أجبت أسرع كلما حصلت على نقاط أكثر!</p><span class="ex-lv hard">TIME ATTACK</span></div>
+      <div class="ex-body">
+        <div class="timer-display" id="sc-timer">60</div>
+        <div class="score-line">Score: <strong id="sc-score">0</strong> &nbsp;|&nbsp; Best: <strong id="sc-best">0</strong></div>
+        <div class="btn-row"><button class="btn btn-primary" id="sc-start" onclick="startSpeedChallenge()">▶ Start Challenge</button></div>
+        <div id="sc-container"></div>
+        <div class="speed-result-line" id="sc-result" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7 — Open Questions (NEW) -->
+  <div class="page" id="tab-7">
+    <div class="section-title"><h2>💬 Open Questions</h2><span class="tag">أسئلة نقاش مفتوحة</span></div>
+    <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:16px;direction:rtl;text-align:right">💡 اكتب إجابتك الخاصة، ثم اضغط "نموذج إجابة" للمقارنة، وقيّم نفسك</p>
+    <div id="oq-container"></div>
+  </div>
+
+  <!-- TAB 8 — Final Boss Challenge -->
+  <div class="page" id="tab-8">
+    <div class="section-title"><h2>Final Boss Challenge</h2><span class="tag">👾 تحدي الوحش</span></div>
+
+    <div class="boss-health-wrap">
+      <div class="boss-health-label"><span>👾 Boss Health</span><span id="boss-health-pct">100%</span></div>
+      <div class="boss-health-bar"><div class="boss-health-fill" id="boss-health-fill" style="width:100%"></div></div>
+      <div class="boss-stage-tags">
+        <span class="boss-stage-tag" id="bstag-1">Stage 1: Vocabulary</span>
+        <span class="boss-stage-tag" id="bstag-2">Stage 2: Matching</span>
+        <span class="boss-stage-tag" id="bstag-3">Stage 3: MCQ</span>
+        <span class="boss-stage-tag" id="bstag-4">Stage 4: Listening</span>
+      </div>
+    </div>
+
+    <div class="quiz-score-box" id="final-score-box">
+      <div class="score-num" id="final-num">0/10</div>
+      <div class="score-label">Your Score</div>
+      <div class="score-msg" id="final-msg"></div>
+      <div class="btn-row" style="justify-content:center;margin-top:16px;" id="cert-btn-row"></div>
+    </div>
+
+    <div class="ex-card" id="final-test-card">
+      <div class="ex-head">
+        <h3>👾 Final Boss Challenge — All Topics</h3>
+        <p>اختبار شامل من جميع مفردات الوحدة — أثبت مهارتك واهزم الوحش!</p>
+        <span class="ex-lv boss">BOSS LEVEL</span>
+      </div>
+      <div class="ex-body">
+        <div class="progress-bar-ex"><div class="progress-fill" id="ft-progress" style="width:0%"></div></div>
+        <div class="score-line">Score: <strong id="ft-score">0 / 10</strong></div>
+
+        <div class="mcq-block"><div class="mcq-q">1. <span>"Toothpaste"</span> means: <button class="audio-btn" onclick="speak('Toothpaste')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Toothpaste" تعني: (اختر الإجابة)</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft1" data-correct="true" onclick="pickFT(this)">معجون أسنان</div><div class="mcq-opt" data-qid="ft1" onclick="pickFT(this)">شامبو</div><div class="mcq-opt" data-qid="ft1" onclick="pickFT(this)">طلاء أظافر</div><div class="mcq-opt" data-qid="ft1" onclick="pickFT(this)">فرشاة شعر</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">2. Which word means <span>"يستعير"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي كلمة تعني "يستعير"؟</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft2" data-correct="true" onclick="pickFT(this)">Borrow</div><div class="mcq-opt" data-qid="ft2" onclick="pickFT(this)">Give back</div><div class="mcq-opt" data-qid="ft2" onclick="pickFT(this)">Give up</div><div class="mcq-opt" data-qid="ft2" onclick="pickFT(this)">Avoid</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">3. <span>"Irritate"</span> means: <button class="audio-btn" onclick="speak('Irritate')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Irritate" تعني: (اختر الإجابة)</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft3" data-correct="true" onclick="pickFT(this)">يزعج</div><div class="mcq-opt" data-qid="ft3" onclick="pickFT(this)">يطعم</div><div class="mcq-opt" data-qid="ft3" onclick="pickFT(this)">يتخيل</div><div class="mcq-opt" data-qid="ft3" onclick="pickFT(this)">يمانع</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">4. Which phrase means <span>"أخيرًا"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي عبارة تعني "أخيرًا"؟</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft4" data-correct="true" onclick="pickFT(this)">At long last</div><div class="mcq-opt" data-qid="ft4" onclick="pickFT(this)">A bit too much</div><div class="mcq-opt" data-qid="ft4" onclick="pickFT(this)">Put back</div><div class="mcq-opt" data-qid="ft4" onclick="pickFT(this)">Turn off</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">5. <span>"Hairbrush"</span> means: <button class="audio-btn" onclick="speak('Hairbrush')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Hairbrush" تعني: (اختر الإجابة)</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft5" data-correct="true" onclick="pickFT(this)">فرشاة الشعر</div><div class="mcq-opt" data-qid="ft5" onclick="pickFT(this)">مجفف الشعر</div><div class="mcq-opt" data-qid="ft5" onclick="pickFT(this)">مرآة</div><div class="mcq-opt" data-qid="ft5" onclick="pickFT(this)">مقص</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">6. Which word means <span>"يستسلم"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي عبارة تعني "يستسلم"؟</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft6" data-correct="true" onclick="pickFT(this)">Give up</div><div class="mcq-opt" data-qid="ft6" onclick="pickFT(this)">Give back</div><div class="mcq-opt" data-qid="ft6" onclick="pickFT(this)">Clean up</div><div class="mcq-opt" data-qid="ft6" onclick="pickFT(this)">Blow up</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">7. <span>"Scissors"</span> means: <button class="audio-btn" onclick="speak('Scissors')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Scissors" تعني: (اختر الإجابة)</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft7" data-correct="true" onclick="pickFT(this)">مقص</div><div class="mcq-opt" data-qid="ft7" onclick="pickFT(this)">مرآة</div><div class="mcq-opt" data-qid="ft7" onclick="pickFT(this)">شامبو</div><div class="mcq-opt" data-qid="ft7" onclick="pickFT(this)">طلاء أظافر</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">8. Which word means <span>"يطفئ"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي عبارة تعني "يطفئ"؟</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft8" data-correct="true" onclick="pickFT(this)">Turn off</div><div class="mcq-opt" data-qid="ft8" onclick="pickFT(this)">Put back</div><div class="mcq-opt" data-qid="ft8" onclick="pickFT(this)">Clean up</div><div class="mcq-opt" data-qid="ft8" onclick="pickFT(this)">Give back</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">9. <span>"Dishwashing liquid"</span> means: <button class="audio-btn" onclick="speak('Dishwashing liquid')">🔊</button><br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">كلمة "Dishwashing liquid" تعني: (اختر الإجابة)</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft9" data-correct="true" onclick="pickFT(this)">سائل غسيل الصحون</div><div class="mcq-opt" data-qid="ft9" onclick="pickFT(this)">شامبو</div><div class="mcq-opt" data-qid="ft9" onclick="pickFT(this)">معجون أسنان</div><div class="mcq-opt" data-qid="ft9" onclick="pickFT(this)">طلاء أظافر</div></div></div>
+
+        <div class="mcq-block"><div class="mcq-q">10. Which word means <span>"يمانع"</span>?<br><button class="tr-btn" onclick="toggleTr(this)">🌐 ترجمة</button><div class="tr-tooltip">أي كلمة تعني "يمانع"؟</div></div>
+          <div class="mcq-options"><div class="mcq-opt" data-qid="ft10" data-correct="true" onclick="pickFT(this)">Mind</div><div class="mcq-opt" data-qid="ft10" onclick="pickFT(this)">Imagine</div><div class="mcq-opt" data-qid="ft10" onclick="pickFT(this)">Irritate</div><div class="mcq-opt" data-qid="ft10" onclick="pickFT(this)">Annoy</div></div></div>
+
+        <div class="btn-row" style="margin-top:25px; justify-content:center;">
+          <button class="btn btn-boss" onclick="submitFinalTest()">⚔️ Submit Boss Challenge ⚔️</button>
+          <button class="btn btn-reset" onclick="resetFinalTest()">↺ Try Again</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-head">
+        <h3>Stage 4 — Listening 🔊</h3>
+        <p>استمع إلى الكلمة واختر معناها (تُحسب ضمن صحة الوحش)</p>
+        <span class="ex-lv boss">STAGE 4</span>
+      </div>
+      <div class="ex-body">
+        <div class="score-line">Score: <strong id="boss-listen-score">0 / 4</strong></div>
+        <div id="boss-listen-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 9 — Results Dashboard (NEW) -->
+  <div class="page" id="tab-9">
+    <div class="section-title"><h2>🏆 My Results</h2><span class="tag">لوحة نتائجي</span></div>
+    <div class="res-grid">
+      <div class="res-stat"><div class="res-val" id="res-xp">0</div><div class="res-lbl">Total XP</div></div>
+      <div class="res-stat"><div class="res-val" id="res-coins">0</div><div class="res-lbl">Coins Earned</div></div>
+      <div class="res-stat"><div class="res-val" id="res-correct">0</div><div class="res-lbl">Correct Answers</div></div>
+      <div class="res-stat"><div class="res-val" id="res-wrong">0</div><div class="res-lbl">Wrong Answers</div></div>
+      <div class="res-stat"><div class="res-val" id="res-accuracy">0%</div><div class="res-lbl">Accuracy</div></div>
+      <div class="res-stat"><div class="res-val" id="res-sections">0/10</div><div class="res-lbl">Completed Sections</div></div>
+      <div class="res-stat"><div class="res-val" id="res-rank">🌱</div><div class="res-lbl">Current Rank</div></div>
+      <div class="res-stat"><div class="res-val" id="res-achievements">0/6</div><div class="res-lbl">Achievements</div></div>
+      <div class="res-stat"><div class="res-val" id="res-streak">0</div><div class="res-lbl">Best Streak</div></div>
+      <div class="res-stat"><div class="res-val" id="res-time">0m</div><div class="res-lbl">Time Spent</div></div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>Performance by Section</h3><p>أفضل أداء وأضعف نقطة</p></div>
+      <div class="ex-body" id="res-bars-container"></div>
+      <div class="ex-body" style="padding-top:0;">
+        <p style="font-size:.85rem;font-weight:800;margin-bottom:4px;">🌟 Best Performance: <span id="res-best" style="color:var(--green);">—</span></p>
+        <p style="font-size:.85rem;font-weight:800;">📌 Weakest Area: <span id="res-weak" style="color:var(--coral);">—</span></p>
+      </div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>🥇 Achievements</h3><p>الإنجازات المحققة</p></div>
+      <div class="ex-body"><div class="ach-grid" id="ach-panel-results"></div></div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-head"><h3>📜 Certificate</h3><p>احصل على شهادة إتمام بعد اجتياز تحدي الوحش بنسبة ٧٠٪ فأكثر</p></div>
+      <div class="ex-body">
+        <div class="btn-row"><button class="btn btn-primary" onclick="generateCertificate()">📜 Generate Certificate</button></div>
+        <div id="cert-container"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  Prepared by Teacher Jaber
+  <span>Super Goal 3 &nbsp;•&nbsp; Unit 10 Vocabulary — Who Used My Toothpaste?</span>
+</footer>
+
+<!-- ═══ NAME OVERLAY ═══ -->
+<div class="ns-overlay" id="name-overlay">
+  <div class="ns-card">
+    <h2>👋 Welcome, Hero!</h2>
+    <p style="margin-top:6px;color:var(--text-muted);font-size:.9rem;">Enter your name to begin your vocabulary journey<br><span dir="rtl" style="font-family:'Tajawal',sans-serif;">أدخل اسمك لبدء رحلتك في تعلم المفردات</span></p>
+    <input type="text" id="name-overlay-input" maxlength="30" placeholder="Your name / اسمك">
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn btn-primary" onclick="saveNameFromOverlay()">✓ Let's Go!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AVATAR OVERLAY ═══ -->
+<div class="ns-overlay" id="avatar-overlay">
+  <div class="ns-card">
+    <h2>🎭 Choose Your Avatar</h2>
+    <p style="margin-top:6px;color:var(--text-muted);font-size:.9rem;">اختر شخصيتك في هذه الرحلة</p>
+    <div class="opt-grid">
+      <div class="avatar-opt" data-av="scholar" onclick="pickAvatar('scholar','📚')"><span class="av-emoji">📚</span>Scholar</div>
+      <div class="avatar-opt" data-av="graduate" onclick="pickAvatar('graduate','🎓')"><span class="av-emoji">🎓</span>Graduate</div>
+      <div class="avatar-opt" data-av="explorer" onclick="pickAvatar('explorer','🚀')"><span class="av-emoji">🚀</span>Explorer</div>
+      <div class="avatar-opt" data-av="champion" onclick="pickAvatar('champion','🏆')"><span class="av-emoji">🏆</span>Champion</div>
+      <div class="avatar-opt" data-av="master" onclick="pickAvatar('master','👑')"><span class="av-emoji">👑</span>Master</div>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin-top:14px;">
+      <button class="btn btn-primary" onclick="closeAvatarPicker()">✓ Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RESET CONFIRMATION MODAL ═══ -->
+<div class="ns-overlay" id="reset-confirm-modal">
+  <div class="ns-card" style="border-top: 4px solid var(--red);">
+    <h2 style="color: var(--red);">🗑 Reset Progress</h2>
+    <p style="margin: 12px 0; line-height: 1.6;">
+      Are you sure you want to reset all progress?<br>
+      This will permanently erase XP, coins, level, rank, achievements, avatar, your name, all quiz answers and scores, streak, difficulty mode, and report statistics. This cannot be undone.<br><br>
+      <span dir="rtl" style="font-family: 'Tajawal', sans-serif;">هل أنت متأكد من رغبتك في إعادة تعيين كل التقدم؟ لا يمكن التراجع عن هذا.</span>
+    </p>
+    <div class="btn-row" style="justify-content: center; margin-top: 16px;">
+      <button onclick="executeResetProgress()" class="btn" style="background: var(--red); color: white; border: none;">Yes, Reset</button>
+      <button onclick="closeResetModal()" class="btn btn-ghost" style="color: #fff; border-color: rgba(255,255,255,0.4);">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ACHIEVEMENT UNLOCK OVERLAY ═══ -->
+<div class="ns-overlay" id="ach-unlock-overlay">
+  <div class="ns-card" style="border-top:4px solid var(--gold);">
+    <h2>🎉 Achievement Unlocked!</h2>
+    <div style="font-size:3.5rem;margin:14px 0;" id="ach-unlock-icon">🏅</div>
+    <div style="font-weight:900;font-size:1.1rem;" id="ach-unlock-name">—</div>
+    <div style="font-size:.85rem;color:var(--text-muted);margin-top:4px;" id="ach-unlock-desc">—</div>
+    <div class="btn-row" style="justify-content:center;margin-top:16px;">
+      <button class="btn btn-primary" onclick="closeAchUnlock()">Nice! ✓</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ── Theme Toggle ──
+function toggleTheme() {
+  document.body.classList.toggle('dark-mode');
+  const d = document.body.classList.contains('dark-mode');
+  document.getElementById('dark-btn').textContent = d ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+
+// ── Tab Navigation ──
+function showTab(n) {
+  document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.nav-tabs button').forEach((b,i) => b.classList.toggle('active', i===n));
+  window.scrollTo({top:0, behavior:'smooth'});
+  currentTabId = n;
+  if(n===9) renderResultsDashboard();
+  saveState();
+}
+
+/* ── Pill-nav: wheel → horizontal scroll + drag to scroll (identical pattern used across the series) ── */
+(function(){
+  const nav = document.getElementById('nav-tabs');
+  if(!nav) return;
+  nav.addEventListener('wheel', function(e){
+    if(e.deltaY !== 0){ e.preventDefault(); nav.scrollLeft += e.deltaY * 1.2; }
+  }, {passive:false});
+  let isDown = false, startX, scrollStart;
+  nav.addEventListener('mousedown', function(e){
+    if(e.target.tagName === 'BUTTON') return;
+    isDown = true; nav.classList.add('is-dragging');
+    startX = e.pageX - nav.offsetLeft; scrollStart = nav.scrollLeft;
+  });
+  document.addEventListener('mouseup', function(){ isDown = false; nav.classList.remove('is-dragging'); });
+  nav.addEventListener('mouseleave', function(){ isDown = false; nav.classList.remove('is-dragging'); });
+  nav.addEventListener('mousemove', function(e){
+    if(!isDown) return; e.preventDefault();
+    const x = e.pageX - nav.offsetLeft, walk = (x - startX) * 1.5;
+    nav.scrollLeft = scrollStart - walk;
+  });
+  let lastActiveBtn = nav.querySelector('button.active');
+  const observer = new MutationObserver(function(){
+    const active = nav.querySelector('button.active');
+    if(!active || active === lastActiveBtn) return;
+    lastActiveBtn = active;
+    const navRect = nav.getBoundingClientRect(), btnRect = active.getBoundingClientRect();
+    const btnCenter = (btnRect.left - navRect.left) + nav.scrollLeft + btnRect.width / 2;
+    const target = btnCenter - navRect.width / 2;
+    nav.scrollTo({left: Math.max(0, target), behavior:'smooth'});
+  });
+  observer.observe(nav, {subtree:true, attributeFilter:['class']});
+})();
+
+// ── TTS — restricted to female voices only ──
+function speak(text) {
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.88;
+
+  const voices = window.speechSynthesis.getVoices();
+
+  // Preferred, known female voice names (checked first, in order)
+  const preferredFemale = [
+    'Google US English', 'Microsoft Zira', 'Microsoft Zira Desktop',
+    'Microsoft Aria Online (Natural) - English (United States)',
+    'Microsoft Jenny Online (Natural) - English (United States)',
+    'Samantha', 'Victoria', 'Karen', 'Moira', 'Tessa', 'Fiona', 'Susan', 'Allison', 'Ava'
+  ];
+
+  // Name fragments that indicate a male voice — always excluded
+  const maleFragments = ['David', 'Mark', 'James', 'Daniel', 'Alex', 'Fred', 'Guy', 'Ryan', 'George', 'Tom', 'Male'];
+  const isMale = (name) => maleFragments.some(m => name.indexOf(m) !== -1);
+
+  let chosenVoice = null;
+
+  // 1) Exact match against the preferred female voice list
+  for (let i = 0; i < preferredFemale.length; i++) {
+    chosenVoice = voices.find(v => v.name === preferredFemale[i]);
+    if (chosenVoice) break;
+  }
+
+  // 2) Any English voice whose name signals "female", explicitly excluding male-sounding names
+  if (!chosenVoice) {
+    chosenVoice = voices.find(v =>
+      v.lang.indexOf('en') === 0 &&
+      !isMale(v.name) &&
+      /female|woman|zira|samantha|victoria|aria|jenny|karen|moira|tessa|fiona|susan|allison|ava/i.test(v.name)
+    );
+  }
+
+  // 3) Last resort: any English voice that is NOT recognisably male
+  if (!chosenVoice) {
+    chosenVoice = voices.find(v => v.lang.indexOf('en') === 0 && !isMale(v.name));
+  }
+
+  if (chosenVoice) u.voice = chosenVoice;
+
+  speechSynthesis.speak(u);
+}
+// Make sure the voice list is ready (some browsers load it asynchronously)
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); };
+}
+
+// ── Web Audio ──
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function getACtx(){ if(!audioCtx) audioCtx = new AudioCtx(); return audioCtx; }
+
+function playCorrectSound() {
+  try {
+    const ctx = getACtx();
+    [[0,523],[0.12,659],[0.24,784]].forEach(([t,f]) => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type='sine'; o.frequency.setValueAtTime(f, ctx.currentTime+t);
+      g.gain.setValueAtTime(0.22, ctx.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+t+0.25);
+      o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.28);
+    });
+  } catch(e){}
+}
+
+function playWrongSound() {
+  try {
+    const ctx=getACtx(), o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(200, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(80, ctx.currentTime+0.35);
+    g.gain.setValueAtTime(0.18, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.38);
+    o.start(ctx.currentTime); o.stop(ctx.currentTime+0.4);
+  } catch(e){}
+}
+
+// ── Gamification ──
+let currentXP = 0, streakCount = 0, correctCount = 0, wrongCount = 0, completedTotal = 0, coins = 0, bestStreak = 0;
+const totalInteractiveItems = 42;
+
+function showXPToast(msg) {
+  const t = document.getElementById('xp-toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1400);
+}
+
+function addXP(a) {
+  currentXP += a;
+  document.getElementById('xp-display').textContent = currentXP;
+  showXPToast('+' + a + ' XP ⭐');
+  const badge = document.getElementById('xp-display');
+  badge.classList.add('bump');
+  setTimeout(() => badge.classList.remove('bump'), 300);
+}
+
+function addCoins(n){
+  coins += n;
+  const el = document.getElementById('coin-display');
+  el.textContent = coins;
+  el.classList.add('bump');
+  setTimeout(()=>el.classList.remove('bump'), 300);
+}
+
+function updateStreak(correct) {
+  if(correct) { streakCount++; correctCount++; document.getElementById('correct-display').textContent = correctCount; if(streakCount>bestStreak) bestStreak=streakCount; }
+  else { streakCount = 0; wrongCount++; }
+  document.getElementById('streak-display').textContent = streakCount;
+  const icon = document.getElementById('streak-icon');
+  if(streakCount >= 5) icon.textContent = '🌟';
+  else if(streakCount >= 3) icon.textContent = '🔥';
+  else icon.textContent = '🔥';
+  checkAchievements();
+}
+
+function updateProgressBar() {
+  const bar = document.getElementById('main-progress');
+  if(bar) bar.style.width = Math.min(100, Math.round((completedTotal/totalInteractiveItems)*100)) + '%';
+}
+
+function triggerSuccessEffects(xpPoints = 10) {
+  addXP(xpPoints);
+  addCoins(Math.max(1,Math.round(xpPoints/5)));
+  updateStreak(true);
+  updateRankBadge();
+  playCorrectSound();
+  if(typeof confetti === 'function' && streakCount % 3 === 0)
+    confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+  saveState();
+}
+
+function triggerWrongEffects() {
+  updateStreak(false);
+  playWrongSound();
+  saveState();
+}
+
+// ── Fill in Blanks (Exercise A) — full Drag & Drop (mouse) ──
+const answers = { b1:'toothpaste', b2:'borrow', b3:'mirror', b4:'finish', b5:'mess' };
+let draggedWord = null;
+
+function dragStart(ev) {
+  if (ev.target.classList.contains('used')) { ev.preventDefault(); return; }
+  draggedWord = ev.target.dataset.word || ev.target.textContent.trim();
+  ev.dataTransfer.setData("text/plain", draggedWord);
+  ev.dataTransfer.effectAllowed = "move";
+}
+
+function dragOver(ev) {
+  ev.preventDefault();
+  ev.dataTransfer.dropEffect = "move";
+}
+
+function dragEnter(ev) {
+  ev.preventDefault();
+  ev.currentTarget.classList.add('drag-over');
+}
+
+function dragLeave(ev) {
+  ev.currentTarget.classList.remove('drag-over');
+}
+
+function dropWord(ev, blankId) {
+  ev.preventDefault();
+  document.getElementById(blankId).classList.remove('drag-over');
+  const incomingWord = ev.dataTransfer.getData("text/plain") || draggedWord;
+  if (!incomingWord) return;
+  fillBlankWithWord(blankId, incomingWord);
+  draggedWord = null;
+}
+
+// Core fill logic shared by mouse drag-and-drop AND touch drag-and-drop
+function fillBlankWithWord(blankId, word) {
+  const b = document.getElementById(blankId);
+  if (!b) return;
+
+  // If this blank was already filled, release the previous word back to the bank
+  if (b.dataset.value) releaseWord(b.dataset.value);
+
+  b.textContent = word;
+  b.classList.add('filled');
+  b.dataset.value = word;
+
+  // Mark the newly-dropped word as used (disabled) in the word bank
+  document.querySelectorAll('.wb-word').forEach(w => {
+    if (w.dataset.word === word) w.classList.add('used');
+  });
+
+  const sent = b.closest('.fill-sentence');
+  if(sent) sent.classList.remove('correct', 'wrong');
+}
+
+function releaseWord(word) {
+  document.querySelectorAll('.wb-word').forEach(w => {
+    if (w.dataset.word === word) w.classList.remove('used');
+  });
+}
+
+// Clicking a filled blank empties it and returns the word to the bank
+function clearBlank(blankId) {
+  const b = document.getElementById(blankId);
+  if (!b.dataset.value) return;
+
+  releaseWord(b.dataset.value);
+
+  b.textContent = '___________';
+  b.classList.remove('filled');
+  delete b.dataset.value;
+
+  const sent = b.closest('.fill-sentence');
+  if(sent) sent.classList.remove('correct', 'wrong');
+}
+
+function checkFill() {
+  let correct = 0;
+  ['b1','b2','b3','b4','b5'].forEach((id, i) => {
+    const b = document.getElementById(id);
+    const fs = document.getElementById('fs'+(i+1));
+    if(b.dataset.value === answers[id]) { correct++; fs.classList.add('correct'); fs.classList.remove('wrong'); }
+    else { fs.classList.add('wrong'); fs.classList.remove('correct'); }
+  });
+  if(correct === 5) { triggerSuccessEffects(40); completedTotal += 5; updateProgressBar(); perfectScoreHit=true; markSection(1); }
+  else triggerWrongEffects();
+  const r = document.getElementById('fill-result');
+  r.style.display = 'block';
+  r.innerHTML = correct === 5 ? '🎉 Perfect! All correct!' : 'Score: '+correct+'/5 — Review the incorrect ones.';
+  r.style.color = correct === 5 ? 'var(--green)' : 'var(--coral)';
+}
+
+function resetFill() {
+  ['b1','b2','b3','b4','b5'].forEach((id, i) => {
+    const b = document.getElementById(id); b.textContent = '___________'; b.classList.remove('filled'); delete b.dataset.value;
+    const fs = document.getElementById('fs'+(i+1)); fs.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.wb-word').forEach(w => w.classList.remove('used'));
+  draggedWord = null;
+  document.getElementById('fill-result').style.display = 'none';
+}
+
+// ── Touch Drag & Drop (mobile/tablet support) ──
+// Native HTML5 dragstart/dragover/drop events are NOT fired on touch screens,
+// so we simulate the same drag-and-drop behaviour using touch events.
+// Uses distance-based hit testing (with padding) instead of elementFromPoint,
+// which is far more reliable for small drop targets on a phone screen.
+let touchDraggedWord = null;
+let touchDraggedEl = null;
+let touchGhostEl = null;
+let touchHoverBlank = null;
+const BLANK_HIT_PADDING = 28; // px of extra tolerance around each blank
+
+function findBlankAt(x, y) {
+  let best = null, bestDist = Infinity;
+  document.querySelectorAll('.blank').forEach(b => {
+    const r = b.getBoundingClientRect();
+    const withinX = x >= r.left - BLANK_HIT_PADDING && x <= r.right + BLANK_HIT_PADDING;
+    const withinY = y >= r.top - BLANK_HIT_PADDING && y <= r.bottom + BLANK_HIT_PADDING;
+    if (withinX && withinY) {
+      const cx = (r.left + r.right) / 2, cy = (r.top + r.bottom) / 2;
+      const dist = Math.hypot(x - cx, y - cy);
+      if (dist < bestDist) { bestDist = dist; best = b; }
+    }
+  });
+  return best;
+}
+
+function positionGhost(x, y) {
+  if(!touchGhostEl) return;
+  touchGhostEl.style.left = (x - touchGhostEl.offsetWidth / 2) + 'px';
+  touchGhostEl.style.top = (y - touchGhostEl.offsetHeight / 2 - 46) + 'px';
+}
+
+function touchDragStart(e) {
+  const wordEl = e.currentTarget;
+  if (wordEl.classList.contains('used')) return;
+  e.preventDefault();
+
+  const touch = e.touches[0];
+  touchDraggedWord = wordEl.dataset.word;
+  touchDraggedEl = wordEl;
+  wordEl.classList.add('dragging-touch');
+
+  const ghost = document.createElement('div');
+  ghost.className = 'wb-word touch-ghost';
+  ghost.textContent = touchDraggedWord;
+  document.body.appendChild(ghost);
+  touchGhostEl = ghost;
+  positionGhost(touch.clientX, touch.clientY);
+
+  document.addEventListener('touchmove', touchDragMove, { passive: false });
+  document.addEventListener('touchend', touchDragEnd, { passive: false });
+  document.addEventListener('touchcancel', touchDragCancel, { passive: false });
+}
+
+function touchDragMove(e) {
+  if (!touchGhostEl) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  positionGhost(touch.clientX, touch.clientY);
+
+  const blank = findBlankAt(touch.clientX, touch.clientY);
+  if (touchHoverBlank && touchHoverBlank !== blank) touchHoverBlank.classList.remove('drag-over');
+  if (blank) blank.classList.add('drag-over');
+  touchHoverBlank = blank;
+}
+
+function finishTouchDrag(shouldDrop, e) {
+  document.removeEventListener('touchmove', touchDragMove);
+  document.removeEventListener('touchend', touchDragEnd);
+  document.removeEventListener('touchcancel', touchDragCancel);
+  if (e && e.cancelable) e.preventDefault();
+
+  // Re-check the exact drop point using the final touch position — more
+  // reliable than trusting whatever the last touchmove happened to record.
+  let dropBlank = touchHoverBlank;
+  if (shouldDrop && e && e.changedTouches && e.changedTouches.length) {
+    const t = e.changedTouches[0];
+    const b = findBlankAt(t.clientX, t.clientY);
+    if (b) dropBlank = b;
+  }
+
+  if (touchGhostEl) { touchGhostEl.remove(); touchGhostEl = null; }
+  if (touchDraggedEl) { touchDraggedEl.classList.remove('dragging-touch'); }
+  if (touchHoverBlank) touchHoverBlank.classList.remove('drag-over');
+
+  if (shouldDrop && dropBlank && touchDraggedWord) {
+    fillBlankWithWord(dropBlank.id, touchDraggedWord);
+  }
+
+  touchHoverBlank = null;
+  touchDraggedWord = null;
+  touchDraggedEl = null;
+}
+
+function touchDragEnd(e) { finishTouchDrag(true, e); }
+function touchDragCancel(e) { finishTouchDrag(false, e); }
+
+function initTouchDragDrop() {
+  document.querySelectorAll('.wb-word').forEach(w => {
+    w.addEventListener('touchstart', touchDragStart, { passive: false });
+  });
+}
+initTouchDragDrop();
+
+// ── Fill 2 (context MCQ, 2 options) ──
+let f2Score = 0, f2Total = 0;
+
+function pickF2(el) {
+  const q = el.dataset.q;
+  const opts = document.querySelectorAll(`[data-q="${q}"]`);
+  if(opts[0].classList.contains('locked')) return;
+  opts.forEach(o => o.classList.add('locked'));
+  if(el.dataset.correct) {
+    el.classList.add('correct'); f2Score++; triggerSuccessEffects(); completedTotal++; updateProgressBar();
+  } else {
+    el.classList.add('wrong'); triggerWrongEffects();
+    opts.forEach(o => { if(o.dataset.correct) o.classList.add('correct'); });
+  }
+  f2Total++;
+  document.getElementById('f2-score').textContent = f2Score + ' / 5';
+  if(f2Total>=5){ if(f2Score===5) perfectScoreHit=true; markSection(1); }
+}
+
+function revealFill2(btn) {
+  document.querySelectorAll('[data-q]').forEach(o => { o.classList.add('locked'); if(o.dataset.correct) o.classList.add('correct'); });
+  btn.innerHTML = '✓ Revealed'; btn.style.opacity = '.6'; btn.style.cursor = 'default';
+}
+
+function resetFill2() {
+  document.querySelectorAll('[data-q]').forEach(o => o.classList.remove('correct','wrong','locked'));
+  f2Score = 0; f2Total = 0; document.getElementById('f2-score').textContent = '0 / 5';
+  const btn = document.querySelector('[onclick="revealFill2(this)"]');
+  if(btn) { btn.innerHTML = '▶ Reveal answers'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; }
+}
+
+// ── Matching 1 ──
+let selLeft = null, selRight = null, matchedCount = 0;
+
+function selectMatch(el, side) {
+  if(el.classList.contains('matched-correct')) return;
+  if(side === 'left') { if(selLeft) selLeft.classList.remove('selected'); selLeft = el; el.classList.add('selected'); }
+  else { if(selRight) selRight.classList.remove('selected'); selRight = el; el.classList.add('selected'); }
+  if(selLeft && selRight) {
+    if(selLeft.dataset.id === selRight.dataset.id) {
+      selLeft.classList.remove('selected'); selRight.classList.remove('selected');
+      selLeft.classList.add('matched-correct'); selRight.classList.add('matched-correct');
+      matchedCount++; document.getElementById('match-score').textContent = matchedCount + ' / 8';
+      triggerSuccessEffects(); completedTotal++; updateProgressBar();
+      if(matchedCount===8){ perfectScoreHit=true; markSection(2); }
+    } else {
+      selLeft.classList.add('matched-wrong'); selRight.classList.add('matched-wrong');
+      triggerWrongEffects();
+      setTimeout(() => { selLeft.classList.remove('selected','matched-wrong'); selRight.classList.remove('selected','matched-wrong'); selLeft = null; selRight = null; }, 500);
+      return;
+    }
+    selLeft = null; selRight = null;
+  }
+}
+
+function resetMatch() {
+  document.querySelectorAll('#match1-left .match-item, #match1-right .match-item').forEach(el => el.classList.remove('selected','matched-correct','matched-wrong'));
+  selLeft = null; selRight = null; matchedCount = 0; document.getElementById('match-score').textContent = '0 / 8';
+}
+
+// ── Matching 2 ──
+let sel2Left = null, sel2Right = null, matched2Count = 0;
+
+function selectMatch2(el, side) {
+  if(el.classList.contains('matched-correct')) return;
+  if(side === 'left') { if(sel2Left) sel2Left.classList.remove('selected'); sel2Left = el; el.classList.add('selected'); }
+  else { if(sel2Right) sel2Right.classList.remove('selected'); sel2Right = el; el.classList.add('selected'); }
+  if(sel2Left && sel2Right) {
+    if(sel2Left.dataset.id === sel2Right.dataset.id) {
+      sel2Left.classList.remove('selected'); sel2Right.classList.remove('selected');
+      sel2Left.classList.add('matched-correct'); sel2Right.classList.add('matched-correct');
+      matched2Count++; document.getElementById('match2-score').textContent = matched2Count + ' / 6';
+      triggerSuccessEffects(); completedTotal++; updateProgressBar();
+      if(matched2Count===6){ perfectScoreHit=true; markSection(2); }
+    } else {
+      sel2Left.classList.add('matched-wrong'); sel2Right.classList.add('matched-wrong');
+      triggerWrongEffects();
+      setTimeout(() => { sel2Left.classList.remove('selected','matched-wrong'); sel2Right.classList.remove('selected','matched-wrong'); sel2Left = null; sel2Right = null; }, 500);
+      return;
+    }
+    sel2Left = null; sel2Right = null;
+  }
+}
+
+function resetMatch2() {
+  document.querySelectorAll('[data-id^="n"]').forEach(el => el.classList.remove('selected','matched-correct','matched-wrong'));
+  sel2Left = null; sel2Right = null; matched2Count = 0;
+  document.getElementById('match2-score').textContent = '0 / 6';
+}
+
+// ── MCQ Quiz ──
+let mcqAnswered = {}, mcqCorrect = 0, mcqTotal = 0;
+
+function pickMCQ(el) {
+  const q = el.dataset.qid;
+  if(mcqAnswered[q]) return;
+  mcqAnswered[q] = true;
+  const opts = document.querySelectorAll(`[data-qid="${q}"]`);
+  opts.forEach(o => o.classList.add('locked'));
+  if(el.dataset.correct) {
+    el.classList.add('correct'); mcqCorrect++; triggerSuccessEffects(); completedTotal++; updateProgressBar();
+  } else {
+    el.classList.add('wrong'); triggerWrongEffects();
+    opts.forEach(o => { if(o.dataset.correct) o.classList.add('correct'); });
+  }
+  mcqTotal++;
+  document.getElementById('mcq-score').textContent = mcqCorrect + ' / 8';
+  document.getElementById('mcq-progress').style.width = (mcqTotal/8*100) + '%';
+  if(mcqTotal>=8){ if(mcqCorrect===8) perfectScoreHit=true; markSection(3); }
+}
+
+// ── Final Boss Challenge ──
+let ftAnswered = {}, ftCorrect = 0, ftTotal = 0;
+let bossListenAnswered = {}, bossListenScore = 0;
+let certGenerated = false;
+
+function pickFT(el) {
+  const q = el.dataset.qid;
+  if(ftAnswered[q]) return;
+  ftAnswered[q] = { correct: !!el.dataset.correct };
+  const opts = document.querySelectorAll(`[data-qid="${q}"]`);
+  opts.forEach(o => o.classList.add('locked'));
+  if(el.dataset.correct) {
+    el.classList.add('correct'); ftCorrect++; triggerSuccessEffects(15); completedTotal++; updateProgressBar();
+  } else {
+    el.classList.add('wrong'); triggerWrongEffects();
+    opts.forEach(o => { if(o.dataset.correct) o.classList.add('correct'); });
+  }
+  ftTotal++;
+  document.getElementById('ft-score').textContent = ftCorrect + ' / 10';
+  document.getElementById('ft-progress').style.width = (ftTotal/10*100) + '%';
+  if(ftTotal>=1) document.getElementById('bstag-1').classList.add('done');
+  if(ftTotal>=4) document.getElementById('bstag-2').classList.add('done');
+  if(ftTotal>=7) document.getElementById('bstag-3').classList.add('done');
+  updateBossHealth();
+}
+
+function submitFinalTest() {
+  const box = document.getElementById('final-score-box');
+  box.style.display = 'block';
+  const pct = ftCorrect / 10;
+  const pName = document.getElementById('student-name').value.trim() || 'Hero';
+  let msg = '';
+  if(pct === 1) { msg = `🎉 Boss Defeated! Perfect Score, ${pName}!`; if(typeof confetti==='function') confetti({particleCount:150,spread:100,origin:{y:0.6}}); playCorrectSound(); setTimeout(playCorrectSound,200); perfectScoreHit=true; }
+  else if(pct >= 0.8) { msg = `👏 Great job, ${pName}! Almost perfect!`; if(typeof confetti==='function') confetti({particleCount:70,spread:60,origin:{y:0.6}}); }
+  else if(pct >= 0.6) msg = `💪 Good effort, ${pName}! The Boss is wounded!`;
+  else msg = `📚 The Boss was too strong, ${pName}. Keep studying!`;
+  document.getElementById('final-num').textContent = ftCorrect + '/10';
+  document.getElementById('final-msg').textContent = msg;
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+  markSection(8);
+  const certRow = document.getElementById('cert-btn-row');
+  if(pct>=0.7){
+    certRow.innerHTML = '<button class="btn btn-primary" onclick="showTab(9);setTimeout(generateCertificate,300);">📜 Get Your Certificate!</button>';
+  } else {
+    certRow.innerHTML = '';
+  }
+  saveState();
+}
+
+function resetFinalTest() {
+  document.querySelectorAll('[data-qid^="ft"]').forEach(o => o.classList.remove('correct','wrong','locked'));
+  ftAnswered = {}; ftCorrect = 0; ftTotal = 0;
+  document.getElementById('ft-score').textContent = '0 / 10';
+  document.getElementById('ft-progress').style.width = '0%';
+  document.getElementById('final-score-box').style.display = 'none';
+  bossListenAnswered={}; bossListenScore=0;
+  document.getElementById('boss-listen-score').textContent='0 / 4';
+  document.querySelectorAll('.boss-stage-tag').forEach(t=>t.classList.remove('done'));
+  renderBossListen();
+  updateBossHealth();
+}
+
+function updateBossHealth(){
+  const totalCorrect = ftCorrect + bossListenScore;
+  const totalQ = 10 + 4;
+  const pct = Math.max(0, 100 - Math.round(totalCorrect/totalQ*100));
+  document.getElementById('boss-health-fill').style.width = pct+'%';
+  document.getElementById('boss-health-pct').textContent = pct+'%';
+  if(ftTotal>=10 && Object.keys(bossListenAnswered).length>=4) document.getElementById('bstag-4').classList.add('done');
+}
+
+// ── Translate Toggles ──
+function toggleColTr(colId, btn) {
+  const col = document.getElementById(colId);
+  const showing = col.classList.contains('match-tr-show');
+  col.classList.toggle('match-tr-show', !showing);
+  btn.textContent = showing ? '🌐 ترجمة' : '✕ إخفاء';
+}
+
+function toggleOptTr(btn, qid) {
+  const block = btn.closest('.mcq-block');
+  const trs = block.querySelectorAll('.opt-tr');
+  const showing = trs[0] && trs[0].style.display !== 'none' && trs[0].style.display !== '';
+  trs.forEach(t => t.style.display = showing ? 'none' : 'inline-block');
+  btn.textContent = showing ? '🌐 ترجمة الخيارات' : '✕ إخفاء الترجمة';
+}
+
+function toggleWbTr(btn) {
+  const bank = btn.closest('.word-bank');
+  const trs = bank.querySelectorAll('.wb-word-tr');
+  const showing = trs[0].style.display !== 'none' && trs[0].style.display !== '';
+  trs.forEach(t => t.style.display = showing ? 'none' : 'inline-block');
+  btn.textContent = showing ? '🌐 ترجمة الكلمات' : '✕ إخفاء الترجمة';
+}
+
+function toggleTr(btn) {
+  const tip = btn.nextElementSibling;
+  const showing = tip.classList.contains('show');
+  tip.classList.toggle('show', !showing);
+  btn.textContent = showing ? '🌐 ترجمة' : '✕ إخفاء';
+}
+/* ══════════════ VOCABULARY DATA POOL (used by challenge/TF/speed generators) ══════════════ */
+const VOCAB = [
+  {word:'Complaint', ar:'شكوى'},{word:'Dishwashing liquid', ar:'سائل غسيل الصحون'},{word:'Hairbrush', ar:'فرشاة الشعر'},
+  {word:'Hair dryer', ar:'مجفف الشعر'},{word:'Mess', ar:'فوضى'},{word:'Mirror', ar:'مرآة'},
+  {word:'Nail polish', ar:'طلاء الأظافر'},{word:'Nephew', ar:'ابن الأخ / الأخت'},{word:'Scissors', ar:'مقص'},
+  {word:'Shampoo', ar:'شامبو'},{word:'Toothpaste', ar:'معجون أسنان'},
+  {word:'Annoy', ar:'يزعج'},{word:'Avoid', ar:'يتجنب'},{word:'Borrow', ar:'يستعير'},{word:'Feed', ar:'يطعم'},
+  {word:'Finish', ar:'ينهي'},{word:'Imagine', ar:'يتخيل'},{word:'Irritate', ar:'يزعج / يضايق'},
+  {word:'Mind', ar:'يمانع'},{word:'Blow up', ar:'يفقد أعصابه'},{word:'Clean up', ar:'ينظف'},
+  {word:'Give back', ar:'يعيد الشيء'},{word:'Give up', ar:'يستسلم'},{word:'At long last', ar:'أخيرًا'},
+  {word:'A bit too much', ar:'مبالغ فيه'},{word:'Put back', ar:'يعيده لمكانه'},{word:'Turn off', ar:'يطفئ'},
+  {word:'Dirty', ar:'متسخ'},{word:'Already', ar:'بالفعل'}
+];
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function makeMCQ(entry, pool){
+  const distractors = shuffle(pool.filter(v=>v.word!==entry.word)).slice(0,3).map(v=>v.ar);
+  const options = shuffle([entry.ar, ...distractors]);
+  return { question: entry.word, correct: entry.ar, options };
+}
+
+/* ══════════════ ACHIEVEMENTS ══════════════ */
+const ACHIEVEMENTS = [
+  {id:'first_steps', icon:'🥉', name:'First Steps', desc:'Complete your first activity', check: s=>s.completedTotal>=1},
+  {id:'vocab_learner', icon:'📚', name:'Vocabulary Learner', desc:'Flip 10 vocabulary cards', check: s=>Object.keys(s.flippedCards||{}).length>=10},
+  {id:'quiz_master', icon:'🎯', name:'Quiz Master', desc:'Score 100% on any quiz', check: s=>s.perfectScoreHit},
+  {id:'speedster', icon:'⚡', name:'Speedster', desc:'Finish a speed round', check: s=>s.speedRoundDone},
+  {id:'on_fire', icon:'🔥', name:'On Fire', desc:'Reach a 5-answer streak', check: s=>s.bestStreak>=5},
+  {id:'vocab_king', icon:'👑', name:'Vocabulary King', desc:'Complete every section', check: s=>Object.keys(s.sectionsDone||{}).length>=10}
+];
+
+/* ══════════════ RANKS ══════════════ */
+const RANKS = [
+  {xp:0, icon:'🌱', name:'New Learner'},
+  {xp:200, icon:'📘', name:'Active Learner'},
+  {xp:500, icon:'📗', name:'Vocabulary Explorer'},
+  {xp:1000, icon:'🎓', name:'Vocabulary Expert'},
+  {xp:2000, icon:'🏆', name:'Vocabulary Master'},
+  {xp:5000, icon:'👑', name:'Vocabulary Legend'}
+];
+function getRank(xp){ let r=RANKS[0]; for(const rk of RANKS){ if(xp>=rk.xp) r=rk; } return r; }
+
+/* ══════════════ GAMIFICATION STATE ══════════════ */
+const SAVE_KEY='u10VocabToothpasteSave_v1';
+const DIFF_KEY='u10VocabToothpasteDiff';
+const NAME_KEY='u10VocabToothpasteName';
+
+let easyMode = false;
+let chosenAvatar = null;
+let studentName = '';
+const sectionTotals = {0:1,1:8,2:11,3:8,4:20,5:10,6:1,7:6,8:14,9:1}; // per-tab item counts for completion tracking
+let sectionProgress = {0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0};
+let sectionsDone = {};
+let flippedCards = {};
+let achievementsUnlocked = {};
+let perfectScoreHit = false;
+let speedRoundDone = false;
+let currentTabId = 0;
+let sessionStart = Date.now();
+let accumulatedMs = 0;
+
+function markSection(idx){
+  sectionsDone[idx]=true;
+  checkAchievements();
+  saveState();
+}
+
+function showXPToast(msg) {
+  const t = document.getElementById('xp-toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1400);
+}
+
+function addXP(a) {
+  currentXP += a;
+  document.getElementById('xp-display').textContent = currentXP;
+  showXPToast('+' + a + ' XP ⭐');
+  const badge = document.getElementById('xp-display');
+  badge.classList.add('bump');
+  setTimeout(() => badge.classList.remove('bump'), 300);
+  updateRankBadge();
+}
+
+function addCoins(a){
+  coins += a;
+  const el = document.getElementById('coin-display');
+  el.textContent = coins;
+  el.classList.add('bump');
+  setTimeout(()=>el.classList.remove('bump'), 300);
+}
+
+function updateStreak(correct) {
+  if(correct) { streakCount++; correctCount++; document.getElementById('correct-display').textContent = correctCount; if(streakCount>bestStreak) bestStreak=streakCount; }
+  else { streakCount = 0; wrongCount++; }
+  document.getElementById('streak-display').textContent = streakCount;
+  const icon = document.getElementById('streak-icon');
+  if(streakCount >= 5) icon.textContent = '🌟';
+  else if(streakCount >= 3) icon.textContent = '🔥';
+  else icon.textContent = '🔥';
+  const badge = document.getElementById('streak-display');
+  if(correct){ badge.classList.add('hot'); setTimeout(()=>badge.classList.remove('hot'),400); }
+  checkAchievements();
+}
+
+function updateProgressBar() {
+  const bar = document.getElementById('main-progress');
+  if(bar) bar.style.width = Math.min(100, Math.round((completedTotal/totalInteractiveItems)*100)) + '%';
+}
+
+function updateRankBadge(){
+  const rk = getRank(currentXP);
+  const el = document.getElementById('rank-display');
+  if(el) el.textContent = rk.icon+' '+rk.name;
+}
+
+function triggerSuccessEffects(xpPoints = 10, coinPoints) {
+  addXP(xpPoints);
+  addCoins(coinPoints!==undefined?coinPoints:Math.max(1,Math.round(xpPoints/5)));
+  updateStreak(true);
+  playCorrectSound();
+  if(streakCount % 3 === 0) confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+  saveState();
+}
+
+function triggerWrongEffects() {
+  updateStreak(false);
+  playWrongSound();
+  saveState();
+}
+
+/* ══════════════ EASY MODE ══════════════ */
+function toggleEasyMode(){
+  easyMode = !easyMode;
+  document.getElementById('easy-toggle-btn').textContent = '💡 Easy Mode: '+(easyMode?'ON':'OFF');
+  document.querySelectorAll('.mcq-block').forEach(b=>attachEasyHint(b));
+  saveState();
+}
+function attachEasyHint(block){
+  let hintBtn = block.querySelector('.easy-hint-btn');
+  if(easyMode){
+    if(!hintBtn){
+      hintBtn = document.createElement('button');
+      hintBtn.className='tr-btn easy-hint-btn';
+      hintBtn.style.background='linear-gradient(135deg,var(--gold),var(--orange))';
+      hintBtn.style.marginTop='6px';
+      hintBtn.textContent='💡 Remove 2 wrong answers';
+      hintBtn.onclick=function(){ easyEliminate(block); };
+      block.appendChild(hintBtn);
+    }
+  } else if(hintBtn){ hintBtn.remove(); }
+}
+function easyEliminate(block){
+  // A correct option is marked either with a bare data-c attribute (static MCQ/Boss tabs)
+  // or with data-correct="true" (dynamically generated Vocabulary Challenge / Boss Listening
+  // blocks). Both conventions must be recognized, or the hint treats every option as "wrong"
+  // and can eliminate the real answer along with a distractor.
+  const wrongs = Array.from(block.querySelectorAll('.mcq-opt')).filter(o=>{
+    if(o.hasAttribute('data-c')) return false;
+    if(o.getAttribute('data-correct')==='true') return false;
+    return true;
+  });
+  shuffle(wrongs).slice(0,2).forEach(o=>o.classList.add('eliminated'));
+  const btn = block.querySelector('.easy-hint-btn');
+  if(btn){ btn.disabled=true; btn.style.opacity='.5'; }
+}
+
+/* ══════════════ ACHIEVEMENTS: check + toast + panel ══════════════ */
+function checkAchievements(){
+  const state = {completedTotal, flippedCards, perfectScoreHit, speedRoundDone, bestStreak, sectionsDone};
+  ACHIEVEMENTS.forEach(a=>{
+    if(!achievementsUnlocked[a.id] && a.check(state)){
+      achievementsUnlocked[a.id]=true;
+      showBadgeToast(a);
+      showAchUnlockOverlay(a);
+    }
+  });
+  renderAchPanels();
+}
+function showBadgeToast(a){
+  const t = document.getElementById('badgeToast');
+  t.innerHTML = a.icon+' <span>Achievement unlocked: <strong>'+a.name+'</strong></span>';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+function showAchUnlockOverlay(a){
+  document.getElementById('ach-unlock-icon').textContent = a.icon;
+  document.getElementById('ach-unlock-name').textContent = a.name;
+  document.getElementById('ach-unlock-desc').textContent = a.desc;
+  document.getElementById('ach-unlock-overlay').classList.add('show');
+  playCorrectSound(); setTimeout(playCorrectSound, 150);
+}
+window.closeAchUnlock=function(){ document.getElementById('ach-unlock-overlay').classList.remove('show'); };
+function renderAchPanels(){
+  const html = ACHIEVEMENTS.map(a=>{
+    const unlocked = !!achievementsUnlocked[a.id];
+    return '<div class="ach-card '+(unlocked?'unlocked':'locked')+'"><div class="ach-icon">'+a.icon+'</div><div class="ach-name">'+a.name+'</div><div class="ach-desc">'+a.desc+'</div></div>';
+  }).join('');
+  const p1 = document.getElementById('ach-panel-results'); if(p1) p1.innerHTML = html;
+}
+
+/* ══════════════ NAME / AVATAR ONBOARDING ══════════════ */
+function onNameInput(){
+  studentName = document.getElementById('student-name').value.trim();
+  localStorage.setItem(NAME_KEY, studentName);
+  saveState();
+}
+window.saveNameFromOverlay = function(){
+  const v = document.getElementById('name-overlay-input').value.trim();
+  studentName = v;
+  document.getElementById('student-name').value = v;
+  localStorage.setItem(NAME_KEY, studentName);
+  document.getElementById('name-overlay').classList.remove('show');
+  if(!chosenAvatar) document.getElementById('avatar-overlay').classList.add('show');
+  saveState();
+};
+window.openAvatarPicker = function(){ document.getElementById('avatar-overlay').classList.add('show'); };
+window.closeAvatarPicker = function(){ document.getElementById('avatar-overlay').classList.remove('show'); saveState(); };
+window.pickAvatar = function(id, emoji){
+  chosenAvatar = id;
+  document.querySelectorAll('.avatar-opt').forEach(o=>o.classList.toggle('picked', o.getAttribute('data-av')===id));
+  updateAvatarDisplays(emoji);
+  saveState();
+};
+function updateAvatarDisplays(emoji){
+  const map = {scholar:'📚',graduate:'🎓',explorer:'🚀',champion:'🏆',master:'👑'};
+  const e = emoji || map[chosenAvatar] || '🎭';
+  const chip = document.getElementById('avatar-chip-display'); if(chip) chip.textContent = e;
+  const inline = document.getElementById('hud-avatar-inline'); if(inline) inline.textContent = e;
+}
+
+/* ══════════════ RESET PROGRESS (custom modal, no native confirm) ══════════════ */
+window.confirmResetProgress = function() {
+  const modal = document.getElementById('reset-confirm-modal');
+  if (modal) {
+    modal.classList.add('show');
+  } else {
+    executeResetProgress();
+  }
+};
+window.closeResetModal = function() {
+  const modal = document.getElementById('reset-confirm-modal');
+  if (modal) {
+    modal.classList.remove('show');
+  }
+};
+window.executeResetProgress = function() {
+  try {
+    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(DIFF_KEY);
+    localStorage.removeItem(NAME_KEY);
+  } catch(e) {
+    console.error('Could not clear localStorage:', e);
+  }
+  location.reload();
+};
+
+/* ══════════════ SAVE / LOAD (LocalStorage persistence) ══════════════ */
+function safeNumber(v,d){ return (typeof v==='number' && !isNaN(v)) ? v : d; }
+function safePlainObject(v){ return (v && typeof v==='object' && !Array.isArray(v)) ? v : {}; }
+
+function saveState(){
+  try{
+    accumulatedMs += (Date.now()-sessionStart); sessionStart = Date.now();
+    const data = {
+      currentXP, coins, streakCount, correctCount, wrongCount, completedTotal, bestStreak,
+      easyMode, chosenAvatar, studentName, sectionProgress, sectionsDone, flippedCards,
+      achievementsUnlocked, perfectScoreHit, speedRoundDone, currentTabId, accumulatedMs,
+      darkMode: document.body.classList.contains('dark-mode'),
+      mcqAnswered, ftAnswered, tfAnswered, tfCorrect, tfTotal,
+      matchedCount, matched2Count, f2Score, f2Total,
+      vcMatchedCount, vcListenAnswered, vcListenScore, vcSpeedScore, vcSpeedTotal,
+      scBest, oqEvals, bossListenAnswered, bossListenScore,
+      certGenerated
+    };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+    if(studentName) localStorage.setItem(NAME_KEY, studentName);
+  }catch(e){ console.warn('Could not save progress',e); }
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return false;
+    const d = JSON.parse(raw);
+    currentXP=safeNumber(d.currentXP,0); coins=safeNumber(d.coins,0);
+    streakCount=safeNumber(d.streakCount,0); correctCount=safeNumber(d.correctCount,0);
+    wrongCount=safeNumber(d.wrongCount,0); completedTotal=safeNumber(d.completedTotal,0);
+    bestStreak=safeNumber(d.bestStreak,0);
+    easyMode=!!d.easyMode; chosenAvatar=(typeof d.chosenAvatar==='string')?d.chosenAvatar:null;
+    studentName=(typeof d.studentName==='string')?d.studentName:'';
+    sectionProgress=Object.assign({0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0}, safePlainObject(d.sectionProgress));
+    sectionsDone=safePlainObject(d.sectionsDone);
+    flippedCards=safePlainObject(d.flippedCards);
+    achievementsUnlocked=safePlainObject(d.achievementsUnlocked);
+    perfectScoreHit=!!d.perfectScoreHit; speedRoundDone=!!d.speedRoundDone;
+    currentTabId=safeNumber(d.currentTabId,0);
+    accumulatedMs=safeNumber(d.accumulatedMs,0);
+    if(d.darkMode){ document.body.classList.add('dark-mode'); document.getElementById('dark-btn').textContent='☀️ Light Mode'; }
+    Object.assign(mcqAnswered, safePlainObject(d.mcqAnswered));
+    Object.assign(ftAnswered, safePlainObject(d.ftAnswered));
+    Object.assign(tfAnswered, safePlainObject(d.tfAnswered));
+    tfCorrect=safeNumber(d.tfCorrect,0); tfTotal=safeNumber(d.tfTotal,0);
+    matchedCount=safeNumber(d.matchedCount,0); matched2Count=safeNumber(d.matched2Count,0);
+    f2Score=safeNumber(d.f2Score,0); f2Total=safeNumber(d.f2Total,0);
+    vcMatchedCount=safeNumber(d.vcMatchedCount,0);
+    Object.assign(vcListenAnswered, safePlainObject(d.vcListenAnswered));
+    vcListenScore=safeNumber(d.vcListenScore,0);
+    vcSpeedScore=safeNumber(d.vcSpeedScore,0); vcSpeedTotal=safeNumber(d.vcSpeedTotal,0);
+    scBest=safeNumber(d.scBest,0);
+    oqEvals=safePlainObject(d.oqEvals);
+    Object.assign(bossListenAnswered, safePlainObject(d.bossListenAnswered));
+    bossListenScore=safeNumber(d.bossListenScore,0);
+    certGenerated=!!d.certGenerated;
+    return true;
+  }catch(e){ console.warn('Could not restore saved progress — starting fresh.',e); return false; }
+}
+
+/* ══════════════ TRUE / FALSE TAB ══════════════ */
+const TF_DATA = [
+  {s:'"Borrow" means to give something to someone permanently.', ans:false, ex:'❌ False — to borrow (يستعير) means to take something temporarily, planning to give it back.'},
+  {s:'A "complaint" is when someone expresses that they are unhappy about something.', ans:true, ex:'✅ True — a complaint (شكوى) is a statement of dissatisfaction.'},
+  {s:'To "clean up" means to make a place messier.', ans:false, ex:'❌ False — to clean up (ينظف) means to make a place tidy, not messier.'},
+  {s:'"Give back" means to return something you borrowed.', ans:true, ex:'✅ True — "give back" (يعيد الشيء) means to return something to its owner.'},
+  {s:'"Annoy" and "irritate" have similar meanings.', ans:true, ex:'✅ True — both annoy and irritate (يزعج / يضايق) mean to bother or upset someone.'},
+  {s:'A "mess" describes a room that is perfectly clean and organized.', ans:false, ex:'❌ False — a mess (فوضى) describes something untidy or disorganized.'},
+  {s:'To "avoid" something means to actively seek it out.', ans:false, ex:'❌ False — to avoid (يتجنب) means to stay away from something.'},
+  {s:'"Blow up" can be used informally to mean losing your temper.', ans:true, ex:'✅ True — "blow up" (يفقد أعصابه) can informally mean to suddenly get very angry.'},
+  {s:'"At long last" means something happened very quickly and unexpectedly.', ans:false, ex:'❌ False — "at long last" (أخيرًا) means after a long wait.'},
+  {s:'"Give up" means to stop trying to do something.', ans:true, ex:'✅ True — to give up (يستسلم) means to stop attempting something.'}
+];
+let tfAnswered = {}, tfCorrect = 0, tfTotal = 0;
+function renderTF(){
+  const c = document.getElementById('tf-container'); if(!c) return;
+  c.innerHTML = TF_DATA.map((item,i)=>`
+    <div class="tf-card" id="tf-card-${i}">
+      <div class="tf-statement">${i+1}. ${item.s} <button class="audio-btn" onclick="speak('${item.s.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">🔊</button></div>
+      <div class="tf-btn-row">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">❌ False</button>
+      </div>
+      <div class="tf-explain" id="tf-explain-${i}">${item.ex}</div>
+    </div>
+  `).join('');
+}
+function answerTF(i, val){
+  if(tfAnswered[i]!==undefined) return;
+  tfAnswered[i]=val;
+  const card = document.getElementById('tf-card-'+i);
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(b=>b.classList.add('locked'));
+  const correct = TF_DATA[i].ans;
+  if(val===correct){
+    btns[val?0:1].classList.add('correct');
+    tfCorrect++; triggerSuccessEffects(); completedTotal++; updateProgressBar();
+  } else {
+    btns[val?0:1].classList.add('wrong');
+    btns[correct?0:1].classList.add('correct');
+    triggerWrongEffects();
+  }
+  tfTotal++;
+  document.getElementById('tf-explain-'+i).classList.add('show');
+  document.getElementById('tf-score').textContent = tfCorrect+' / '+TF_DATA.length;
+  document.getElementById('tf-progress').style.width = Math.round(tfTotal/TF_DATA.length*100)+'%';
+  if(tfCorrect===TF_DATA.length) perfectScoreHit=true;
+  if(tfTotal>=TF_DATA.length) markSection(5);
+  saveState();
+}
+function resetTF(){
+  tfAnswered={}; tfCorrect=0; tfTotal=0;
+  document.getElementById('tf-score').textContent='0 / '+TF_DATA.length;
+  document.getElementById('tf-progress').style.width='0%';
+  renderTF();
+}
+
+/* ══════════════ OPEN QUESTIONS TAB ══════════════ */
+const OQ_DATA = [
+  {q:'Describe a time you had a complaint about a messy room.', model:"Once I had a complaint about my brother's messy room — there were clothes and dishes everywhere, so I asked him to clean up."},
+  {q:'Have you ever borrowed something and forgotten to give it back? What happened?', model:'Yes, I once borrowed my friend\'s scissors and forgot to give them back for a week — I felt bad and returned them at long last.'},
+  {q:'What annoys or irritates you the most about sharing a bathroom?', model:'What annoys me the most is when someone uses my shampoo or toothpaste without asking.'},
+  {q:'Describe how you would ask a family member to clean up after themselves.', model:'I would politely say, "Would you mind cleaning up your mess and putting things back where they belong?"'},
+  {q:'Do you ever feel like giving up on a chore? Describe the situation.', model:'Sometimes I feel like giving up when the mess is a bit too much, but I always finish cleaning in the end.'},
+  {q:'Describe a rule you have with your roommate or siblings about sharing things.', model:'My rule is that if you borrow something, you must give it back and avoid making a mess with it.'}
+];
+let oqEvals = {};
+function renderOQ(){
+  const c = document.getElementById('oq-container'); if(!c) return;
+  c.innerHTML = OQ_DATA.map((item,i)=>`
+    <div class="oq-card">
+      <div class="oq-q">${i+1}. ${item.q} <button class="audio-btn" onclick="speak('${item.q.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">🔊</button></div>
+      <textarea class="oq-textarea" id="oq-input-${i}" placeholder="Write your answer here... / اكتب إجابتك هنا"></textarea>
+      <div class="btn-row" style="margin-top:8px;">
+        <button class="btn btn-secondary" onclick="showModelAnswer(${i})">💡 Model Answer</button>
+      </div>
+      <div class="oq-model" id="oq-model-${i}">${item.model}</div>
+      <div style="font-size:.78rem;color:var(--text-muted);margin-top:8px;font-weight:700;">Self-evaluation:</div>
+      <div class="oq-eval" id="oq-eval-${i}">
+        <button onclick="selfEval(${i},'great',this)">😊 Great</button>
+        <button onclick="selfEval(${i},'good',this)">🙂 Good</button>
+        <button onclick="selfEval(${i},'practice',this)">😕 Needs practice</button>
+      </div>
+    </div>
+  `).join('');
+}
+function showModelAnswer(i){
+  document.getElementById('oq-model-'+i).classList.add('show');
+  const val = document.getElementById('oq-input-'+i).value.trim();
+  if(val && !oqEvals[i]){ triggerSuccessEffects(8,2); completedTotal++; updateProgressBar(); }
+  if(Object.keys(oqEvals).length + (val?1:0) >= OQ_DATA.length) markSection(7);
+  saveState();
+}
+function selfEval(i, level, btn){
+  oqEvals[i]=level;
+  const row = document.getElementById('oq-eval-'+i);
+  row.querySelectorAll('button').forEach(b=>b.classList.remove('picked'));
+  btn.classList.add('picked');
+  if(Object.keys(oqEvals).length>=OQ_DATA.length) markSection(7);
+  saveState();
+}
+
+/* ══════════════ VOCABULARY CHALLENGE TAB ══════════════ */
+// Round 1: Match Word to Meaning
+const VC_MATCH_POOL = shuffle(VOCAB).slice(0,8);
+let vcSelLeft=null, vcSelRight=null, vcMatchedCount=0;
+function renderVCMatch(){
+  const left = document.getElementById('vc-match-left');
+  const right = document.getElementById('vc-match-right');
+  if(!left||!right) return;
+  left.innerHTML = '<h4>Word</h4>' + VC_MATCH_POOL.map((v,i)=>`<div class="match-item" data-id="vc${i}" onclick="selectVCMatch(this,'left')">${v.word} <button class="audio-btn" onclick="event.stopPropagation();speak('${v.word.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">🔊</button></div>`).join('');
+  right.innerHTML = '<h4>Meaning</h4>' + shuffle(VC_MATCH_POOL.map((v,i)=>({...v,i}))).map(v=>`<div class="match-item" data-id="vc${v.i}" onclick="selectVCMatch(this,'right')" style="direction:rtl">${v.ar}</div>`).join('');
+}
+function selectVCMatch(el, side){
+  if(el.classList.contains('matched-correct')) return;
+  if(side==='left'){ if(vcSelLeft) vcSelLeft.classList.remove('selected'); vcSelLeft=el; el.classList.add('selected'); }
+  else { if(vcSelRight) vcSelRight.classList.remove('selected'); vcSelRight=el; el.classList.add('selected'); }
+  if(vcSelLeft && vcSelRight){
+    if(vcSelLeft.dataset.id===vcSelRight.dataset.id){
+      vcSelLeft.classList.remove('selected'); vcSelRight.classList.remove('selected');
+      vcSelLeft.classList.add('matched-correct'); vcSelRight.classList.add('matched-correct');
+      vcMatchedCount++; document.getElementById('vc-match-score').textContent=vcMatchedCount+' / 8';
+      triggerSuccessEffects(); completedTotal++; updateProgressBar();
+      if(vcMatchedCount===8){ perfectScoreHit=true; checkVCComplete(); }
+    } else {
+      vcSelLeft.classList.add('matched-wrong'); vcSelRight.classList.add('matched-wrong');
+      triggerWrongEffects();
+      setTimeout(()=>{ vcSelLeft.classList.remove('selected','matched-wrong'); vcSelRight.classList.remove('selected','matched-wrong'); vcSelLeft=null; vcSelRight=null; },500);
+      return;
+    }
+    vcSelLeft=null; vcSelRight=null;
+  }
+}
+function resetVCMatch(){
+  document.querySelectorAll('#vc-match-left .match-item,#vc-match-right .match-item').forEach(el=>el.classList.remove('selected','matched-correct','matched-wrong'));
+  vcSelLeft=null; vcSelRight=null; vcMatchedCount=0;
+  document.getElementById('vc-match-score').textContent='0 / 8';
+}
+
+// Round 2: Listen and Choose
+const VC_LISTEN_POOL = shuffle(VOCAB).slice(0,6);
+let vcListenAnswered = {}, vcListenScore = 0;
+function renderVCListen(){
+  const c = document.getElementById('vc-listen-container'); if(!c) return;
+  c.innerHTML = VC_LISTEN_POOL.map((v,i)=>{
+    const mcq = makeMCQ(v, VOCAB);
+    return `<div class="mcq-block" data-vcl="${i}">
+      <div class="mcq-q">🔊 <button class="audio-btn" style="width:44px;height:44px;font-size:1.3rem;" onclick="speak('${v.word.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">🔊</button> Listen and choose the correct meaning</div>
+      <div class="mcq-options">${mcq.options.map(o=>`<div class="mcq-opt" data-vcli="${i}" data-correct="${o===mcq.correct}" onclick="pickVCListen(this,${i})" style="direction:rtl">${o}</div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+function pickVCListen(el, i){
+  if(vcListenAnswered[i]!==undefined) return;
+  vcListenAnswered[i]=true;
+  const opts = document.querySelectorAll(`[data-vcli="${i}"]`);
+  opts.forEach(o=>o.classList.add('locked'));
+  if(el.dataset.correct==='true'){
+    el.classList.add('correct'); vcListenScore++; triggerSuccessEffects(); completedTotal++; updateProgressBar();
+    if(vcListenScore===6) perfectScoreHit=true;
+  } else {
+    el.classList.add('wrong'); triggerWrongEffects();
+    opts.forEach(o=>{ if(o.dataset.correct==='true') o.classList.add('correct'); });
+  }
+  document.getElementById('vc-listen-score').textContent = vcListenScore+' / 6';
+  if(Object.keys(vcListenAnswered).length>=6) checkVCComplete();
+}
+function resetVCListen(){
+  vcListenAnswered={}; vcListenScore=0;
+  document.getElementById('vc-listen-score').textContent='0 / 6';
+  renderVCListen();
+}
+
+// Round 3: Speed Round (45s)
+let vcSpeedTimer=null, vcSpeedTimeLeft=45, vcSpeedScore=0, vcSpeedTotal=0, vcSpeedPool=[], vcSpeedIdx=0, vcSpeedStarted=false;
+function startVCSpeed(){
+  if(vcSpeedStarted) return;
+  vcSpeedStarted=true;
+  vcSpeedScore=0; vcSpeedTotal=0; vcSpeedIdx=0; vcSpeedTimeLeft=45;
+  vcSpeedPool = shuffle(VOCAB).map(v=>makeMCQ(v,VOCAB));
+  document.getElementById('vc-speed-start').style.display='none';
+  document.getElementById('vc-speed-result').style.display='none';
+  document.getElementById('vc-speed-score').textContent='0 / 0';
+  nextVCSpeedQ();
+  vcSpeedTimer = setInterval(()=>{
+    vcSpeedTimeLeft--;
+    const td = document.getElementById('vc-speed-timer');
+    td.textContent = vcSpeedTimeLeft;
+    td.classList.toggle('urgent', vcSpeedTimeLeft<=10);
+    if(vcSpeedTimeLeft<=0) endVCSpeed();
+  },1000);
+}
+function nextVCSpeedQ(){
+  const c = document.getElementById('vc-speed-container');
+  if(vcSpeedIdx>=vcSpeedPool.length) vcSpeedIdx=0;
+  const item = vcSpeedPool[vcSpeedIdx];
+  c.innerHTML = `<div class="mcq-block"><div class="mcq-q">${item.question}</div>
+    <div class="mcq-options">${item.options.map(o=>`<div class="mcq-opt" onclick="answerVCSpeed(this,'${o.replace(/'/g,"\\'").replace(/"/g,"&quot;")}','${item.correct.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')" style="direction:rtl">${o}</div>`).join('')}</div></div>`;
+}
+function answerVCSpeed(el, chosen, correct){
+  if(!vcSpeedStarted) return;
+  vcSpeedTotal++;
+  if(chosen===correct){ vcSpeedScore++; addXP(5); addCoins(2); playCorrectSound(); }
+  else { playWrongSound(); }
+  document.getElementById('vc-speed-score').textContent = vcSpeedScore+' / '+vcSpeedTotal;
+  vcSpeedIdx++;
+  if(vcSpeedTimeLeft>0) nextVCSpeedQ();
+}
+function endVCSpeed(){
+  clearInterval(vcSpeedTimer); vcSpeedTimer=null; vcSpeedStarted=false;
+  document.getElementById('vc-speed-timer').textContent='0';
+  document.getElementById('vc-speed-container').innerHTML='';
+  document.getElementById('vc-speed-start').style.display='inline-flex';
+  document.getElementById('vc-speed-start').textContent='↺ Try Again';
+  const bonus = Math.round(vcSpeedScore*3);
+  addXP(bonus); addCoins(Math.round(bonus/2));
+  confetti({particleCount:80,spread:80,origin:{y:0.7}});
+  const r = document.getElementById('vc-speed-result');
+  r.style.display='block';
+  r.textContent = `⚡ Speed Round Complete! ${vcSpeedScore}/${vcSpeedTotal} correct — Bonus: +${bonus} XP 🪙+${Math.round(bonus/2)}`;
+  speedRoundDone=true;
+  completedTotal += vcSpeedScore; updateProgressBar();
+  checkAchievements();
+  checkVCComplete();
+  saveState();
+}
+function checkVCComplete(){
+  if(vcMatchedCount>=8 && Object.keys(vcListenAnswered).length>=6 && speedRoundDone){
+    const total = vcMatchedCount + vcListenScore + vcSpeedScore;
+    document.getElementById('vc-final-box').style.display='block';
+    document.getElementById('vc-final-num').textContent = total;
+    document.getElementById('vc-final-msg').textContent = '🎉 All 3 rounds complete, great work!';
+    markSection(4);
+  }
+}
+
+/* ══════════════ SPEED CHALLENGE TAB (60s mixed) ══════════════ */
+let scTimer=null, scTimeLeft=60, scScore=0, scBest=0, scStarted=false, scPool=[], scIdx=0, scQStart=0;
+function startSpeedChallenge(){
+  if(scStarted) return;
+  scStarted=true; scScore=0; scTimeLeft=60; scIdx=0;
+  scPool = shuffle(VOCAB.concat(VOCAB)).map(v=>makeMCQ(v,VOCAB)); // enough questions for 60s
+  document.getElementById('sc-start').style.display='none';
+  document.getElementById('sc-result').style.display='none';
+  document.getElementById('sc-score').textContent='0';
+  nextSCQ();
+  scTimer = setInterval(()=>{
+    scTimeLeft--;
+    const td = document.getElementById('sc-timer');
+    td.textContent = scTimeLeft;
+    td.classList.toggle('urgent', scTimeLeft<=10);
+    if(scTimeLeft<=0) endSpeedChallenge();
+  },1000);
+}
+function nextSCQ(){
+  if(scIdx>=scPool.length) scIdx=0;
+  scQStart = Date.now();
+  const item = scPool[scIdx];
+  const c = document.getElementById('sc-container');
+  c.innerHTML = `<div class="mcq-block"><div class="mcq-q">What does <span>"${item.question}"</span> mean?</div>
+    <div class="mcq-options">${item.options.map(o=>`<div class="mcq-opt" onclick="answerSC(this,'${o.replace(/'/g,"\\'").replace(/"/g,"&quot;")}','${item.correct.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')" style="direction:rtl">${o}</div>`).join('')}</div></div>`;
+}
+function answerSC(el, chosen, correct){
+  if(!scStarted) return;
+  const elapsed = (Date.now()-scQStart)/1000;
+  if(chosen===correct){
+    const speedBonus = elapsed<2 ? 8 : elapsed<4 ? 5 : 3;
+    scScore += speedBonus;
+    addXP(speedBonus); addCoins(1);
+    playCorrectSound();
+  } else { playWrongSound(); }
+  document.getElementById('sc-score').textContent = scScore;
+  scIdx++;
+  if(scTimeLeft>0) nextSCQ();
+}
+function endSpeedChallenge(){
+  clearInterval(scTimer); scTimer=null; scStarted=false;
+  document.getElementById('sc-timer').textContent='0';
+  document.getElementById('sc-container').innerHTML='';
+  document.getElementById('sc-start').style.display='inline-flex';
+  document.getElementById('sc-start').textContent='↺ Try Again';
+  if(scScore>scBest){ scBest=scScore; }
+  document.getElementById('sc-best').textContent=scBest;
+  confetti({particleCount:70,spread:70,origin:{y:0.7}});
+  const r = document.getElementById('sc-result');
+  r.style.display='block';
+  r.textContent = `⚡ Time's up! Final score: ${scScore} points`;
+  completedTotal++; updateProgressBar();
+  markSection(6);
+  saveState();
+}
+
+const BOSS_LISTEN_POOL = shuffle(VOCAB).slice(0,4);
+function renderBossListen(){
+  const c = document.getElementById('boss-listen-container'); if(!c) return;
+  c.innerHTML = BOSS_LISTEN_POOL.map((v,i)=>{
+    const mcq = makeMCQ(v, VOCAB);
+    return `<div class="mcq-block"><div class="mcq-q">🔊 <button class="audio-btn" style="width:40px;height:40px;" onclick="speak('${v.word.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">🔊</button> Choose the meaning</div>
+      <div class="mcq-options">${mcq.options.map(o=>`<div class="mcq-opt" data-bli="${i}" data-correct="${o===mcq.correct}" onclick="pickBossListen(this,${i})" style="direction:rtl">${o}</div>`).join('')}</div></div>`;
+  }).join('');
+}
+function pickBossListen(el,i){
+  if(bossListenAnswered[i]!==undefined) return;
+  bossListenAnswered[i]=true;
+  document.querySelectorAll(`[data-bli="${i}"]`).forEach(o=>o.classList.add('locked'));
+  if(el.dataset.correct==='true'){ el.classList.add('correct'); bossListenScore++; triggerSuccessEffects(12); }
+  else { el.classList.add('wrong'); triggerWrongEffects(); document.querySelectorAll(`[data-bli="${i}"]`).forEach(o=>{ if(o.dataset.correct==='true') o.classList.add('correct'); }); }
+  document.getElementById('boss-listen-score').textContent = bossListenScore+' / 4';
+  document.getElementById('bstag-4').classList.add('done');
+  updateBossHealth();
+}
+/* ══════════════ RESULTS DASHBOARD ══════════════ */
+function renderResultsDashboard(){
+  document.getElementById('res-xp').textContent = currentXP;
+  document.getElementById('res-coins').textContent = coins;
+  document.getElementById('res-correct').textContent = correctCount;
+  document.getElementById('res-wrong').textContent = wrongCount;
+  const totalAns = correctCount+wrongCount;
+  document.getElementById('res-accuracy').textContent = totalAns? Math.round(correctCount/totalAns*100)+'%' : '0%';
+  document.getElementById('res-sections').textContent = Object.keys(sectionsDone).length+'/10';
+  const rk = getRank(currentXP);
+  document.getElementById('res-rank').textContent = rk.icon+' '+rk.name;
+  document.getElementById('res-achievements').textContent = Object.keys(achievementsUnlocked).length+'/'+ACHIEVEMENTS.length;
+  document.getElementById('res-streak').textContent = bestStreak;
+  const totalMs = accumulatedMs + (Date.now()-sessionStart);
+  document.getElementById('res-time').textContent = Math.max(1,Math.round(totalMs/60000))+'m';
+
+  // Performance by section bars
+  const sections = [
+    {name:'Fill in Blanks', score: (f2Score+ (document.getElementById('fill-result')?.style.display==='block'?4:0)), total: 8},
+    {name:'Matching', score: matchedCount+matched2Count, total: 11},
+    {name:'MCQ Quiz', score: mcqCorrect, total: 8},
+    {name:'Vocabulary Challenge', score: vcMatchedCount+vcListenScore, total: 14},
+    {name:'True / False', score: tfCorrect, total: TF_DATA.length},
+    {name:'Boss Challenge', score: ftCorrect+bossListenScore, total: 14}
+  ];
+  const barsC = document.getElementById('res-bars-container');
+  barsC.innerHTML = sections.map(s=>{
+    const pct = s.total? Math.round(s.score/s.total*100):0;
+    return `<div class="res-bar-row"><div class="res-bar-lbl"><span>${s.name}</span><span>${s.score}/${s.total} (${pct}%)</span></div><div class="res-bar-track"><div class="res-bar-fill" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+  let best = sections[0], weak = sections[0];
+  sections.forEach(s=>{
+    const p = s.total? s.score/s.total : 0;
+    if(p > (best.score/best.total||0)) best=s;
+    if(p < (weak.score/weak.total||1)) weak=s;
+  });
+  document.getElementById('res-best').textContent = best.name;
+  document.getElementById('res-weak').textContent = weak.name;
+  renderAchPanels();
+}
+
+/* ══════════════ CERTIFICATE GENERATOR ══════════════ */
+/* ── Track vocab-card flips via delegation (U10 cards use inline toggle, not a custom function) ── */
+document.addEventListener('click', e=>{
+  const card = e.target.closest && e.target.closest('.vocab-card');
+  if(card){
+    setTimeout(()=>{
+      if(card.classList.contains('flipped')){
+        const w = card.querySelector('.word');
+        if(w){ flippedCards[w.textContent]=true; markSection(0); checkAchievements(); }
+      }
+    }, 0);
+  }
+});
+
+function generateCertificate(){
+  const name = (document.getElementById('student-name').value.trim()) || studentName || 'Hero';
+  const rk = getRank(currentXP);
+  const score = ftCorrect+'/10';
+  const date = new Date().toLocaleDateString();
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 1000; canvas.height = 700; canvas.id='cert-canvas';
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  const grad = ctx.createLinearGradient(0,0,1000,700);
+  grad.addColorStop(0,'#1A1A2E'); grad.addColorStop(1,'#4A0E4E');
+  ctx.fillStyle=grad; ctx.fillRect(0,0,1000,700);
+
+  // Border
+  ctx.strokeStyle='#FFD93D'; ctx.lineWidth=8; ctx.strokeRect(24,24,952,652);
+  ctx.strokeStyle='rgba(255,217,61,0.5)'; ctx.lineWidth=2; ctx.strokeRect(40,40,920,620);
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#FFD93D'; ctx.font='bold 22px Arial'; ctx.fillText('CERTIFICATE OF COMPLETION', 500, 130);
+  ctx.fillStyle='#FFFFFF'; ctx.font='bold 44px Georgia'; ctx.fillText('Unit 1 Vocabulary — Lifestyles', 500, 190);
+
+  ctx.font='20px Arial'; ctx.fillStyle='#E5E7EB'; ctx.fillText('This certificate is proudly presented to', 500, 260);
+
+  ctx.font='bold 52px Georgia'; ctx.fillStyle='#FFD93D'; ctx.fillText(name, 500, 335);
+
+  ctx.font='20px Arial'; ctx.fillStyle='#E5E7EB';
+  ctx.fillText('for successfully completing the Boss Challenge with a score of '+score, 500, 390);
+
+  ctx.font='bold 22px Arial'; ctx.fillStyle='#4ECDC4';
+  ctx.fillText('XP Earned: '+currentXP+'   |   Rank: '+rk.icon+' '+rk.name, 500, 440);
+
+  ctx.font='18px Arial'; ctx.fillStyle='#94a3b8';
+  ctx.fillText('Date: '+date, 500, 490);
+
+  ctx.font='16px Arial'; ctx.fillStyle='#c4b5fd';
+  ctx.fillText('Teacher Jaber  •  Super Goal 3', 500, 600);
+
+  const container = document.getElementById('cert-container');
+  container.innerHTML='';
+  container.appendChild(canvas);
+
+  const btnRow = document.createElement('div');
+  btnRow.className='btn-row';
+  btnRow.style.marginTop='12px';
+  btnRow.innerHTML = `
+    <button class="btn btn-primary" onclick="downloadCertificate()">⬇ Download PNG</button>
+    <button class="btn btn-secondary" onclick="printCertificate()">🖨 Print</button>
+  `;
+  container.appendChild(btnRow);
+
+  certGenerated = true;
+  addXP(25); addCoins(10);
+  confetti({particleCount:120,spread:90,origin:{y:0.6}});
+  markSection(9);
+  saveState();
+}
+function downloadCertificate(){
+  const canvas = document.getElementById('cert-canvas');
+  if(!canvas) return;
+  const link = document.createElement('a');
+  link.download = 'U10_Vocabulary_Certificate.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+function printCertificate(){
+  const canvas = document.getElementById('cert-canvas');
+  if(!canvas) return;
+  const dataUrl = canvas.toDataURL('image/png');
+  const w = window.open('','_blank');
+  w.document.write('<html><head><title>Certificate</title></head><body style="margin:0;display:flex;align-items:center;justify-content:center;"><img src="'+dataUrl+'" style="max-width:100%;" onload="window.print()"></body></html>');
+  w.document.close();
+}
+
+/* ══════════════ MOBILE: overlays don't close on outside tap (except non-onboarding ones) ══════════════ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelectorAll('.ns-overlay').forEach(ov=>{
+    ov.addEventListener('click', e=>{
+      if(e.target===ov && (ov.id==='ach-unlock-overlay')){
+        ov.classList.remove('show');
+      }
+      // name/avatar/reset overlays are only dismissed via their own buttons
+    });
+  });
+});
+
+/* ══════════════ INIT ══════════════ */
+function initGamification(){
+  try{
+    // Render dynamically-generated new sections first so restore logic below can touch their DOM
+    renderTF();
+    renderOQ();
+    renderVCMatch();
+    renderVCListen();
+    renderBossListen();
+
+    const restored = loadState();
+    const savedName = localStorage.getItem(NAME_KEY);
+    if(savedName && !studentName) studentName = savedName;
+    if(studentName) document.getElementById('student-name').value = studentName;
+
+    document.getElementById('xp-display').textContent = currentXP;
+    document.getElementById('coin-display').textContent = coins;
+    document.getElementById('streak-display').textContent = streakCount;
+    document.getElementById('correct-display').textContent = correctCount;
+    document.getElementById('easy-toggle-btn').textContent = '💡 Easy Mode: '+(easyMode?'ON':'OFF');
+    if(easyMode) document.querySelectorAll('.mcq-block').forEach(b=>attachEasyHint(b));
+    updateRankBadge();
+    updateProgressBar();
+    if(chosenAvatar) updateAvatarDisplays();
+    renderAchPanels();
+
+    // Restore MCQ (tab 3)
+    if(mcqCorrect===0){
+      Object.keys(mcqAnswered).forEach(q=>{
+        // visual restore only — re-derive counts from DOM correctness without re-granting XP
+      });
+    }
+
+    if(!studentName){
+      document.getElementById('name-overlay').classList.add('show');
+    } else if(!chosenAvatar){
+      document.getElementById('avatar-overlay').classList.add('show');
+    } else if(restored){
+      showTab(currentTabId||0);
+    }
+  }catch(err){
+    console.error('Vocabulary lesson gamification init error:',err);
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', initGamification);
+}else{
+  initGamification();
+}
+
+</script>
+</body>
+</html>

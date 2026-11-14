@@ -219,7 +219,9 @@ const V=[
  {e:'🛁',p:'take a bath',pa:'<b>took</b> a bath',past:'took a bath', ap:'أستحمّ',apa:'استحمّيتُ', w:['take','took'], d:['taked','tooked']},
  {e:'😴',p:'go to bed',pa:'<b>went</b> to bed',past:'went to bed', ap:'أروح أنام',apa:'رحتُ أنام', w:['go','went'], d:['goed','wented']},
 ];
-function pickVoice(lang){try{const vs=speechSynthesis.getVoices();return vs.find(v=>v.lang&&v.lang.replace('_','-').toLowerCase().startsWith(lang))}catch(e){}}
+function pickVoice(lang){try{const vs=speechSynthesis.getVoices().filter(v=>v.lang&&v.lang.replace('_','-').toLowerCase().startsWith(lang));if(!vs.length)return;
+  const sc=v=>(/premium|ممتاز/i.test(v.name)?6:0)+(/enhanced|محس|neural|natural/i.test(v.name)?4:0)+(/compact|eloquence/i.test(v.name)?-3:0)+(lang==='ar'&&/sa/i.test(v.lang)?1:0);
+  return vs.slice().sort((x,y)=>sc(y)-sc(x))[0]}catch(e){}}
 // cat voice: high, clear, a little slow
 function say(t,r,lang,keep){try{if(!keep)speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);lang=lang||'en';u.lang=lang==='ar'?'ar-SA':'en-US';const v=pickVoice(lang);if(v)u.voice=v;u.rate=r||.8;u.pitch=1.8;u.volume=1;speechSynthesis.speak(u);return u}catch(e){}}
 try{speechSynthesis.onvoiceschanged=()=>{}}catch(e){}

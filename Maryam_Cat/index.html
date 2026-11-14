@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قطة مريم 🐱 usually & yesterday</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Cairo',sans-serif;background:#ffe3ec url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Ctext x='10' y='45' font-size='28' opacity='.18'%3E🐾%3C/text%3E%3C/svg%3E");min-height:100vh;padding:14px;padding-top:70px;color:#fff}
+  .en{font-family:'Patrick Hand',cursive;direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .board{max-width:760px;margin:0 auto;background:radial-gradient(ellipse at top,#ff9f5a,#f07a2e 75%);border:8px solid #fff;border-radius:46px;box-shadow:0 10px 0 #c95a17,0 14px 30px rgba(0,0,0,.2);padding:18px 14px 26px;position:relative}
+  /*tray*/.tray{display:none;height:14px;background:#8a5826;margin:-4px auto 0;max-width:740px;border-radius:0 0 8px 8px;position:relative}
+  .tray:before{content:'';position:absolute;left:40px;top:-4px;width:50px;height:9px;background:#fff;border-radius:3px}
+  .tray:after{content:'';position:absolute;left:100px;top:-4px;width:40px;height:9px;background:#ffd94a;border-radius:3px}
+  h1{text-align:center;font-size:26px;font-weight:900;color:#fff;text-shadow:0 3px 0 #c95a17}
+  .sub{text-align:center;color:#fff3e6;font-size:15px;margin-bottom:12px}
+  .tabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0 16px}
+  .kitty{text-align:center;font-size:64px;margin-top:4px;cursor:pointer;user-select:none;transition:transform .2s}
+  .kitty.talk{animation:talk .35s infinite alternate}
+  @keyframes talk{from{transform:scale(1) rotate(-6deg)}to{transform:scale(1.18) rotate(6deg)}}
+  .catch{position:relative;height:380px;background:linear-gradient(#bfe9ff,#e8f7ff);border-radius:24px;overflow:hidden;touch-action:none;border:4px solid #fff}
+  .catch .item{position:absolute;font-size:34px;top:-40px}
+  .catch .cat{position:absolute;bottom:6px;font-size:54px;transform:translateX(-50%);transition:left .05s}
+  .catch .floor{position:absolute;bottom:0;left:0;right:0;height:14px;background:#7fd06b}
+  .over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(240,122,46,.85);text-align:center;padding:10px}
+  .tab{border:2px dashed #fff;background:transparent;color:#fff8d6;font-family:'Cairo';font-weight:700;font-size:16px;padding:8px 14px;border-radius:30px;cursor:pointer}
+  .tab.on{background:#fff;color:#c95a17;border-style:solid}
+  .page{display:none}.page.on{display:block;animation:fade .4s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+  .head{display:grid;grid-template-columns:60px 1fr 1fr;gap:8px;margin-bottom:8px;direction:ltr}
+  .head div{text-align:center;border-radius:10px;padding:6px 2px;font-weight:700}
+  .h-us{background:#9ad66b;color:#1b3a10}.h-ye{background:#f39a4a;color:#4a1f00}
+  .h-us small,.h-ye small{display:block;font-family:'Cairo';font-size:13px;direction:rtl}
+  .row{display:grid;grid-template-columns:60px 1fr 1fr;gap:8px;margin-bottom:8px;direction:ltr}
+  .emo{font-size:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.25);border-radius:10px}
+  .cell{background:rgba(255,255,255,.15);border:3px solid rgba(255,255,255,.6);border-radius:10px;padding:8px 6px;text-align:center;cursor:pointer;transition:.2s;min-height:68px}
+  .cell:active{transform:scale(.96)}
+  .cell .en{font-size:24px;color:#fff}
+  .cell .ar{display:block;font-size:13px;color:#fff3c4;direction:rtl}
+  .cell.us{border-color:#b8f08a}.cell.ye{border-color:#ffd94a}
+  .cell.ye .en b{color:#fff200;text-shadow:0 2px 0 #c95a17}
+  .cell.hide .en,.cell.hide .ar{visibility:hidden}
+  .cell.hide{background:repeating-linear-gradient(45deg,rgba(243,154,74,.25) 0 10px,transparent 10px 20px);position:relative}
+  .cell.hide:after{content:'🐾 اضغطي';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#ffd94a;font-weight:700}
+  .btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+  .btn{background:#ffd94a;color:#3a2a00;border:none;border-radius:30px;padding:10px 18px;font-family:'Cairo';font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 4px 0 #b8941a}
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b8941a}
+  .btn.alt{background:#fff8d6;box-shadow:0 4px 0 #bdb38a}
+  .tip{background:rgba(255,255,255,.18);border:2px dashed #fff;border-radius:12px;padding:10px 12px;margin-top:14px;font-size:15px;line-height:1.8}
+  .tip .en{font-size:20px;color:#fff200}
+  .playing{box-shadow:0 0 0 4px #ffd94a,0 0 18px #ffd94a}
+  /* game */
+  .hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
+  .stars{font-size:20px;letter-spacing:2px;direction:ltr}
+  .track{position:relative;height:70px;background:rgba(255,255,255,.25);border-radius:40px;margin:6px 0 16px;overflow:hidden;direction:ltr}
+  .track .lbl{position:absolute;bottom:2px;font-size:12px;font-weight:700;color:#fff}
+  .track .l1{left:10px}.track .l2{right:10px}
+  .rocket{position:absolute;top:8px;left:44px;font-size:44px;transition:left .7s cubic-bezier(.5,1.6,.5,1)}
+  .goal{position:absolute;right:46px;top:12px;font-size:38px}
+  .qbox{text-align:center;background:rgba(255,255,255,.2);border-radius:16px;padding:14px 8px}
+  .qemo{font-size:60px;line-height:1.1}
+  .qtxt{font-size:17px;color:#fff3c4;margin:6px 0}
+  .qen{font-size:30px;color:#fff}
+  .blank{display:inline-block;min-width:80px;border-bottom:3px solid #ffd94a;color:#ffd94a}
+  .opts{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px;direction:ltr}
+  .opt{background:#fff;color:#c95a17;border:none;border-radius:14px;padding:12px;font-family:'Patrick Hand',cursive;font-size:28px;cursor:pointer;box-shadow:0 4px 0 #bdb38a}
+  .opt.ok{background:#7fe07f;box-shadow:0 4px 0 #3a9a3a}
+  .opt.no{background:#ff8f8f;box-shadow:0 4px 0 #b84a4a;animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .msg{min-height:30px;text-align:center;font-size:20px;font-weight:900;margin-top:10px;line-height:1.7}
+  #rmsg .en{color:#fff200;font-size:26px}
+  #rheard{font-size:16px;font-weight:700}
+  .win{text-align:center;padding:20px 0}
+  .win .big{font-size:80px;animation:pop 1s infinite alternate}
+  @keyframes pop{to{transform:scale(1.15) rotate(8deg)}}
+  .conf{position:fixed;top:-20px;font-size:24px;pointer-events:none;animation:fall 2.5s linear forwards;z-index:9}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+  .ear{position:absolute;top:-62px;width:0;height:0;border-left:44px solid transparent;border-right:44px solid transparent;border-bottom:72px solid #f07a2e;filter:drop-shadow(0 -6px 0 #fff)}
+  .ear:after{content:'';position:absolute;left:-22px;top:22px;border-left:22px solid transparent;border-right:22px solid transparent;border-bottom:38px solid #ffb3c7}
+  .ear.l{left:50px;transform:rotate(-12deg)}.ear.r{right:50px;transform:rotate(12deg)}
+  .whisk{position:absolute;top:60px;font-size:30px;color:#fff;line-height:.7;opacity:.8}.wl{left:-6px}.wr{right:-6px}
+  .bubble{background:#fff;color:#7a3a10;border-radius:18px;padding:8px 14px;margin:6px auto 12px;max-width:440px;text-align:center;font-weight:700;position:relative}
+  .bubble:before{content:'';position:absolute;top:-10px;left:50%;border:10px solid transparent;border-bottom-color:#fff;border-top:0;margin-left:-10px}
+  .mic.on{background:#ff6b8b;color:#fff;box-shadow:0 4px 0 #b83a55;animation:talk .5s infinite alternate}
+  .start{text-align:center;padding:10px 0}
+  .start p{font-size:17px;line-height:1.9;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="ear l"></div><div class="ear r"></div>
+  <div class="whisk wl">〰<br>〰</div><div class="whisk wr">〰<br>〰</div>
+  <h1>🐱 قطة مريم تعلّمك 🐱</h1>
+  <div id="kitty" class="kitty">😺</div>
+  <div class="sub" style="margin-top:-4px">👆 اضغطي على سنّورة!</div>
+  <div class="bubble">مياو! أنا سنّورة 🐾 بعلمك وش نسوي <span class="en">usually</span> ووش سوينا <span class="en">yesterday</span>!</div>
+  <div class="sub"><span class="en">usually</span> عادةً &nbsp;|&nbsp; <span class="en">yesterday</span> أمس</div>
+
+  <div class="tabs">
+    <button class="tab on" data-p="lesson">📖 الدرس</button>
+    <button class="tab" data-p="test">🙈 اختبري نفسك</button>
+    <button class="tab" data-p="read">🎤 اقرئي</button>
+    <button class="tab" data-p="game">🐟 لعبة الدرس</button>
+    <button class="tab" data-p="fun">🎮 لعبة صيد</button>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page on" id="lesson">
+    <div class="head">
+      <div></div>
+      <div class="h-us"><span class="en" style="font-size:22px">usually</span><small>عادةً (كل يوم)</small></div>
+      <div class="h-ye"><span class="en" style="font-size:22px">yesterday</span><small>أمس (انتهى)</small></div>
+    </div>
+    <div id="rows"></div>
+    <div class="btns">
+      <button class="btn" id="chant">🎵 الأنشودة (Chant)</button>
+    </div>
+    <div class="tip">
+      😺 <b>سنّورة تقول:</b> لما نتكلم عن شي نسويه <b>كل يوم</b> نقول <span class="en">usually</span> ونستخدم الفعل العادي.<br>
+      ولما نتكلم عن <b>أمس</b> نقول <span class="en">yesterday</span> والفعل <b>يتغيّر</b>! 🔄<br>
+      <span class="en">I usually get up at 6.</span><br>
+      <span class="en">Yesterday I got up at 7.</span>
+    </div>
+  </div>
+
+  <!-- TEST YOURSELF -->
+  <div class="page" id="test">
+    <p class="sub">غطّينا عمود <span class="en">yesterday</span> 🙈 قولي الجواب بصوتك، بعدين اضغطي عشان تشوفين!</p>
+    <div class="head">
+      <div></div>
+      <div class="h-us"><span class="en" style="font-size:22px">usually</span></div>
+      <div class="h-ye"><span class="en" style="font-size:22px">yesterday</span></div>
+    </div>
+    <div id="trows"></div>
+    <div class="btns"><button class="btn alt" id="reset">🔄 غطّي من جديد</button></div>
+  </div>
+
+  <!-- READ ALOUD -->
+  <div class="page" id="read">
+    <div class="hud"><div>كلمة <b id="rn">1</b> / 6</div><div class="stars" id="rst"></div></div>
+    <div class="qbox">
+      <div class="qemo" id="remo"></div>
+      <div class="qtxt" id="rlab"></div>
+      <div class="qen en" id="rword" style="font-size:40px"></div>
+      <div class="qtxt" id="rar"></div>
+    </div>
+    <div class="btns">
+      <button class="btn mic" id="rmic">🎤 اضغطي واقرئي</button>
+      <button class="btn alt" id="rhear">🔊 اسمعي</button>
+    </div>
+    <div class="msg" id="rheard"></div>
+    <div class="msg" id="rmsg"></div>
+    <div class="btns"><button class="btn alt" id="rskip">التالي ⬅</button></div>
+    <div class="tip" id="rnomic" style="display:none">😿 المايك ما اشتغل هنا. سنّورة تقدر تسمعك على <b>الكمبيوتر</b> في متصفح Chrome بعد ما تسجلين دخول في Claude 💻💖</div>
+  </div>
+
+  <!-- FUN GAME -->
+  <div class="page" id="fun">
+    <div class="hud">
+      <div>🐟 <b id="fs">0</b></div>
+      <div>🏆 أعلى نتيجة: <b id="fb">0</b></div>
+      <div id="fh" style="direction:ltr">❤️❤️❤️</div>
+    </div>
+    <div class="catch" id="area">
+      <div class="floor"></div>
+      <div class="cat" id="fcat" style="left:50%">🐱</div>
+      <div class="over" id="fover">
+        <div style="font-size:60px">🐱🐟</div>
+        <h1>صيد السمك!</h1>
+        <p style="font-size:16px;line-height:1.9;margin:8px 0">حرّكي سنّورة بإصبعك يمين ويسار 👈👉<br>امسكي السمك 🐟🐠<br>وانتبهي من الماء 💧 سنّورة ما تحب الماء!</p>
+        <button class="btn" id="fgo">ابدئي ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div class="page" id="game">
+    <div id="gstart" class="start">
+      <div style="font-size:70px">😿</div>
+      <h1>سنّورة جوعانة!</h1>
+      <p>سنّورة تبغى توصل للسمكة 🐟<br>كل جواب صح = سنّورة تمشي خطوة 🐾<br>١٠ أسئلة.. يلا يا بطلة ساعديها!</p>
+      <button class="btn" id="go">ابدئي اللعبة ▶</button>
+    </div>
+    <div id="gplay" style="display:none">
+      <div class="hud">
+        <div>سؤال <b id="qn">1</b> / 10</div>
+        <div class="stars" id="stars"></div>
+      </div>
+      <div class="track">
+        <span class="lbl l1">🐾 start</span><span class="lbl l2">🐟 fish!</span>
+        <div class="goal">🐟</div>
+        <div class="rocket" id="rocket">🐱</div>
+      </div>
+      <div class="qbox">
+        <div class="qemo" id="qemo"></div>
+        <div class="qtxt" id="qtxt"></div>
+        <div class="qen en" id="qen"></div>
+      </div>
+      <div class="opts" id="opts"></div>
+      <div class="msg" id="msg"></div>
+    </div>
+    <div id="gwin" class="win" style="display:none">
+      <div class="big">😻🐟</div>
+      <h1>برافو يا مريم! سنّورة شبعت 🎉</h1>
+      <p style="font-size:20px;margin:10px 0">جمعتِ <b id="final"></b> نجمة من 10 ⭐</p>
+      <button class="btn" id="again">العبي مرة ثانية 🔁</button>
+    </div>
+  </div>
+</div>
+<div class="tray"></div>
+
+<script>
+const V=[
+ {e:'⏰',p:'get up',  pa:'<b>got</b> up',  past:'got up', ap:'أستيقظ',   apa:'استيقظتُ', w:['get','got'], d:['getted','gote']},
+ {e:'🥪',p:'eat lunch',pa:'<b>ate</b> lunch',past:'ate lunch', ap:'آكل الغداء',apa:'أكلتُ الغداء', w:['eat','ate'], d:['eated','eat']},
+ {e:'🏠',p:'come home',pa:'<b>came</b> home',past:'came home', ap:'أرجع البيت',apa:'رجعتُ البيت', w:['come','came'], d:['comed','come']},
+ {e:'✏️',p:'do my homework',pa:'<b>did</b> my homework',past:'did my homework', ap:'أحلّ واجبي',apa:'حلّيتُ واجبي', w:['do','did'], d:['doed','done']},
+ {e:'🛁',p:'take a bath',pa:'<b>took</b> a bath',past:'took a bath', ap:'أستحمّ',apa:'استحمّيتُ', w:['take','took'], d:['taked','tooked']},
+ {e:'😴',p:'go to bed',pa:'<b>went</b> to bed',past:'went to bed', ap:'أروح أنام',apa:'رحتُ أنام', w:['go','went'], d:['goed','wented']},
+];
+function pickVoice(lang){try{const vs=speechSynthesis.getVoices();return vs.find(v=>v.lang&&v.lang.replace('_','-').toLowerCase().startsWith(lang))}catch(e){}}
+// cat voice: high, clear, a little slow
+function say(t,r,lang,keep){try{if(!keep)speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);lang=lang||'en';u.lang=lang==='ar'?'ar-SA':'en-US';const v=pickVoice(lang);if(v)u.voice=v;u.rate=r||.8;u.pitch=1.8;u.volume=1;speechSynthesis.speak(u);return u}catch(e){}}
+try{speechSynthesis.onvoiceschanged=()=>{}}catch(e){}
+let AC;function meow(){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime,o=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(520,t);o.frequency.linearRampToValueAtTime(950,t+.18);o.frequency.linearRampToValueAtTime(600,t+.6);f.type='lowpass';f.frequency.setValueAtTime(1200,t);f.frequency.linearRampToValueAtTime(2600,t+.2);f.frequency.linearRampToValueAtTime(900,t+.6);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.35,t+.06);g.gain.linearRampToValueAtTime(.25,t+.4);g.gain.linearRampToValueAtTime(0,t+.65);o.connect(f);f.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.7)}catch(e){}}
+function sayP(t,r,lang){return new Promise(res=>{const u=say(t,r,lang,true);if(!u)return setTimeout(res,1200);let done=false;const fin=()=>{if(!done){done=true;res()}};u.onend=fin;u.onerror=fin;setTimeout(fin,7000)})}
+let kittyBusy=false;
+document.getElementById('kitty').onclick=async()=>{
+  if(kittyBusy)return;kittyBusy=true;const k=document.getElementById('kitty');
+  try{speechSynthesis.cancel()}catch(e){}
+  meow();k.textContent='😸';k.classList.add('talk');
+  await new Promise(r=>setTimeout(r,750));
+  for(let i=0;i<V.length;i++){
+    const r=document.getElementById('r'+i);r&&r.classList.add('playing');
+    await sayP(`${V[i].p}... ${V[i].past}`,.75,'en');
+    r&&r.classList.remove('playing');
+  }
+  await sayP('أحسنتِ يا مريم!',.85,'ar');
+  meow();confetti(25);
+  k.classList.remove('talk');k.textContent='😻';
+  setTimeout(()=>{k.textContent='😺'},1500);kittyBusy=false;
+};
+function cell(cls,html,ar,speak){return `<div class="cell ${cls}" data-s="${speak}"><span class="en">${html}</span><span class="ar">${ar}</span></div>`}
+document.getElementById('rows').innerHTML=V.map((v,i)=>`<div class="row" id="r${i}"><div class="emo">${v.e}</div>${cell('us',v.p,v.ap,v.p)}${cell('ye',v.pa,v.apa,v.past)}</div>`).join('');
+function buildTest(){document.getElementById('trows').innerHTML=V.map(v=>`<div class="row"><div class="emo">${v.e}</div>${cell('us',v.p,v.ap,v.p)}${cell('ye hide',v.pa,v.apa,v.past)}</div>`).join('')}
+buildTest();
+document.addEventListener('click',e=>{
+  const c=e.target.closest('.cell');if(!c)return;
+  if(c.classList.contains('hide')){c.classList.remove('hide')}
+  say(c.dataset.s);
+});
+document.getElementById('reset').onclick=buildTest;
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p));
+});
+// chant
+document.getElementById('chant').onclick=async()=>{
+  for(let i=0;i<V.length;i++){
+    const r=document.getElementById('r'+i);r.classList.add('playing');
+    await new Promise(res=>{const u=say(`${V[i].p}, ${V[i].past}`,.75);if(!u)return setTimeout(res,1500);u.onend=()=>setTimeout(res,300);setTimeout(res,5000)});
+    r.classList.remove('playing');
+  }
+};
+// game
+let Q=[],qi=0,score=0,lock=false;
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+function makeQs(){
+  const qs=[];
+  shuf(V).forEach(v=>{ // type 1: choose past
+    qs.push({e:v.e,t:'أمس.. وش يصير الفعل؟ 🤔',en:`${v.p} ➜ <span class="blank">?</span>`,ok:v.past,opts:shuf([v.past,v.p.replace(v.w[0],v.d[0]),v.p.replace(v.w[0],v.d[1])]),s:v.past});
+  });
+  shuf(V).slice(0,4).forEach(v=>{ // type 2: usually vs yesterday sentence
+    const y=Math.random()<.5;
+    const rest=v.p.replace(v.w[0],'').trim();
+    qs.push({e:v.e,t:y?'أمس (yesterday) 🌙':'كل يوم (usually) ☀️',en:y?`Yesterday I <span class="blank">?</span> ${rest}.`:`I usually <span class="blank">?</span> ${rest}.`,ok:y?v.w[1]:v.w[0],opts:shuf([v.w[0],v.w[1]]),s:y?`Yesterday I ${v.past}.`:`I usually ${v.p}.`});
+  });
+  return shuf(qs).slice(0,10);
+}
+function show(){
+  lock=false;const q=Q[qi];
+  document.getElementById('qn').textContent=qi+1;
+  document.getElementById('qemo').textContent=q.e;
+  document.getElementById('qtxt').textContent=q.t;
+  document.getElementById('qen').innerHTML=q.en;
+  document.getElementById('msg').textContent='';
+  document.getElementById('opts').innerHTML=q.opts.map(o=>`<button class="opt">${o}</button>`).join('');
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,q));
+  document.getElementById('stars').textContent='🐟'.repeat(score)+'·'.repeat(10-score);
+}
+function move(){document.getElementById('rocket').style.left=`calc(44px + (100% - 150px) * ${score/10})`}
+function pick(b,q){
+  if(lock)return;
+  if(b.textContent===q.ok){
+    lock=true;b.classList.add('ok');score++;move();
+    document.getElementById('msg').textContent=['مياو! ممتاز 😺','شطورة! 🐾','رائع! 😻','Great job! 🐱','Meow, super! ⭐'][Math.floor(Math.random()*5)];
+    document.getElementById('qen').innerHTML=q.en.replace(/<span class="blank">\?<\/span>/,`<span class="blank">${q.ok}</span>`);
+    say(q.s);confetti(6);
+    setTimeout(next,1700);
+  }else{
+    b.classList.add('no');b.disabled=true;
+    document.getElementById('msg').textContent='مياو.. حاولي مرة ثانية 😿';
+    Q[qi].missed=true;
+    if(!Q[qi].pen){Q[qi].pen=1}
+  }
+}
+function next(){
+  qi++;
+  if(qi>=Q.length){
+    document.getElementById('gplay').style.display='none';
+    document.getElementById('gwin').style.display='block';
+    const st=Q.filter(q=>!q.missed).length;
+    document.getElementById('final').textContent=st;
+    meow();setTimeout(()=>say('أحسنتِ يا مريم!',.85,'ar'),700);confetti(40);
+  }else show();
+}
+function startGame(){
+  Q=makeQs();qi=0;score=0;move();
+  ['gstart','gwin'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('gplay').style.display='block';show();
+}
+document.getElementById('go').onclick=startGame;
+document.getElementById('again').onclick=startGame;
+function confetti(n){
+  const em=['🐾','🐟','✨','😺','💖','⭐'];
+  for(let i=0;i<n;i++){const s=document.createElement('div');s.className='conf';s.textContent=em[i%em.length];
+    s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3500)}
+}
+
+// ===== read aloud =====
+(function(){
+  const K=[
+   {pr:['get','gets','git','guess'],pa:['got','god','gut','gott']},
+   {pr:['eat','eats','it'],pa:['ate','eight','8','8th']},
+   {pr:['come','comes','calm','comb','cum'],pa:['came','game','kame','cane']},
+   {pr:['do','due','dew'],pa:['did','dead','deed']},
+   {pr:['take','takes','tick','tech'],pa:['took','tuck','talk','took']},
+   {pr:['go','goes','goal','girl'],pa:['went','want','wind','when']}];
+  // steps: each verb -> present then past
+  let vi=0,step=0,stars=0,listening=false,dict=null,rec=null,heard='';
+  const $=id=>document.getElementById(id);
+  function render(){const v=V[vi];
+    $('rn').textContent=vi+1;$('remo').textContent=v.e;
+    $('rlab').innerHTML=step===0?'☀️ عادةً (<span class="en">usually</span>) – اقرئي:':'🌙 أمس (<span class="en">yesterday</span>) – اقرئي:';
+    $('rword').innerHTML=step===0?v.p:v.pa;
+    $('rar').textContent=step===0?v.ap:v.apa;
+    $('rheard').textContent='';$('rmsg').textContent='';
+    $('rst').textContent='⭐'.repeat(stars);}
+  function words(t){return t.toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(Boolean)}
+  function check(t){
+    t=(t||'').trim();
+    const w=words(t),k=K[vi],v=V[vi],want=step===0?k.pr:k.pa,other=step===0?k.pa:k.pr;
+    const right=step===0?v.p:v.past, wrong=step===0?v.past:v.p;
+    const hasWant=w.some(x=>want.includes(x)), hasOther=w.some(x=>other.includes(x));
+    $('rheard').innerHTML=t?'👂 سنّورة سمعت: <span class="en">"'+t+'"</span>':'';
+    const box=$('rmsg');
+    if(!t){
+      box.innerHTML='🙉 ما سمعتك! قرّبي الجوال وارفعي صوتك شوي';
+      say('ما سمعتك، ارفعي صوتك',.9,'ar');return}
+    if(hasWant&&!hasOther){
+      stars++;$('rst').textContent='⭐'.repeat(stars);
+      box.innerHTML='✅ قراءتك صحيحة! 😻 أحسنتِ يا مريم!';meow();confetti(12);
+      setTimeout(()=>say('قراءتك صحيحة! أحسنتِ يا مريم!',.85,'ar'),600);setTimeout(next,3200);return}
+    if(hasOther&&!hasWant){
+      box.innerHTML=step===0
+        ?'❌ قلتِ <span class="en">'+wrong+'</span> وهذا <b>الماضي</b> (أمس) 🌙<br>احنا نبغى <b>العادي</b>: <span class="en">'+right+'</span>'
+        :'❌ قلتِ <span class="en">'+wrong+'</span> وهذا <b>العادي</b> ☀️<br>احنا نبغى <b>الماضي</b>: <span class="en">'+right+'</span>';
+    }else{
+      box.innerHTML='❌ مو بالضبط! الصح: <span class="en">'+right+'</span>';
+    }
+    say('حاولي مرة ثانية. اسمعي:',.9,'ar');
+    setTimeout(()=>say(right,.65,'en',true),50);
+  }
+  function next(){if(step===0){step=1}else{step=0;vi++}
+    if(vi>=V.length){vi=0;$('rmsg').textContent='';$('rword').innerHTML='🏆';$('rlab').textContent='خلصتِ كل الكلمات!';$('rar').textContent='اضغطي التالي عشان تعيدين';$('rheard').textContent='';
+      meow();setTimeout(()=>say('أحسنتِ يا مريم! أنتِ بطلة!',.85,'ar'),600);confetti(40);step=-1;return}
+    render()}
+  $('rskip').onclick=()=>{if(step===-1){step=0;stars=0;render();return}next()};
+  $('rhear').onclick=()=>{const v=V[vi];if(step>=0)say(step===0?v.p:v.past,.7)};
+  function setOn(on){listening=on;$('rmic').classList.toggle('on',on);$('rmic').textContent=on?'👂 سنّورة تسمعك...':'🎤 اضغطي واقرئي'}
+  // browser fallback
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  function startSR(){try{rec=new SR();rec.lang='en-US';rec.interimResults=true;rec.maxAlternatives=5;heard='';
+      rec.onresult=e=>{let alts=[];for(const r of e.results){for(const a of r)alts.push(a.transcript)}heard=e.results[e.results.length-1][0].transcript;$('rheard').innerHTML='<span class="en">'+heard+'</span>';
+        if(e.results[e.results.length-1].isFinal){rec.__done=true;const good=alts.find(a=>{const w=words(a),k=K[vi];return w.some(x=>(step===0?k.pr:k.pa).includes(x))});check(good||heard)}};
+      rec.onend=()=>{setOn(false);if(!rec.__done&&heard)check(heard)};
+      rec.onerror=e=>{setOn(false);if(e.error==='not-allowed'||e.error==='service-not-allowed'){$('rnomic').style.display='block'}};
+      let started=false;rec.onstart=()=>{started=true};rec.onaudiostart=()=>{started=true};
+      rec.start();setOn(true);setTimeout(()=>{if(!started){try{rec.abort()}catch(e){}setOn(false);$('rnomic').style.display='block'}},2500)}catch(e){setOn(false);$('rnomic').style.display='block'}}
+  $('rmic').onclick=()=>{
+    if(step<0)return;
+    if(dict){
+      if(listening){dict.stop().catch(()=>{});return}
+      heard='';$('rheard').textContent='';
+      dict.start().then(()=>setOn(true)).catch(err=>{setOn(false);if(String(err&&err.message||err).includes('not_granted'))$('rnomic').style.display='block'});
+      setOn(true);return}
+    if(SR){if(listening){try{rec.stop()}catch(e){}return}startSR();return}
+    $('rnomic').style.display='block';
+  };
+  render();
+  try{ if(window.claude&&claude.use){claude.use('dictation').then(d=>{if(!d)return;dict=d;
+      d.onPartial(({text})=>{$('rheard').innerHTML='<span class="en">'+text+'</span>'});
+      d.onFinal(({text})=>{heard=(heard+' '+text).trim();dict.stop().catch(()=>{})});
+      d.onState(({state})=>{if(state==='listening')setOn(true);else if(state==='idle'){const was=listening;setOn(false);if(was||heard){check(heard);heard=''}}});
+    }).catch(()=>{})}}catch(e){}
+  if(!SR&&!(window.claude&&claude.use))$('rnomic').style.display='block';
+})();
+
+// ===== catch game =====
+(function(){
+  const area=document.getElementById('area'),cat=document.getElementById('fcat'),over=document.getElementById('fover');
+  let x=50,items=[],score=0,hearts=3,run=false,last=0,spawn=0,speed=1,best=0;
+  try{best=+localStorage.getItem('catBest')||0}catch(e){}
+  document.getElementById('fb').textContent=best;
+  function setX(cx){const r=area.getBoundingClientRect();x=Math.max(6,Math.min(94,(cx-r.left)/r.width*100));cat.style.left=x+'%'}
+  area.addEventListener('pointerdown',e=>{if(run)setX(e.clientX)});
+  area.addEventListener('pointermove',e=>{if(run&&(e.buttons||e.pointerType!=='mouse'))setX(e.clientX)});
+  area.addEventListener('mousemove',e=>{if(run)setX(e.clientX)});
+  function hud(){document.getElementById('fs').textContent=score;document.getElementById('fh').textContent='❤️'.repeat(hearts)+'🤍'.repeat(3-hearts)}
+  function add(){const r=Math.random();const t=r<.22?'💧':(r<.3?'⭐':(Math.random()<.5?'🐟':'🐠'));
+    const el=document.createElement('div');el.className='item';el.textContent=t;const ix=5+Math.random()*90;el.style.left=ix+'%';area.appendChild(el);
+    items.push({el,x:ix,y:-40,t,v:(1.6+Math.random())*speed})}
+  function loop(ts){if(!run)return;const dt=Math.min(40,ts-(last||ts));last=ts;
+    spawn-=dt;if(spawn<=0){add();spawn=Math.max(380,900-score*15)}
+    speed=1+score*.03;
+    const H=area.clientHeight,W=area.clientWidth;
+    items=items.filter(it=>{it.y+=it.v*dt/8;it.el.style.top=it.y+'px';
+      if(it.y>H-80&&it.y<H-20&&Math.abs((it.x-x)/100*W)<38){
+        if(it.t==='💧'){hearts--;cat.textContent='🙀';setTimeout(()=>cat.textContent='🐱',500);navigator.vibrate&&navigator.vibrate(150)}
+        else if(it.t==='⭐'){score+=3;meow()}
+        else{score++;if(score%10===0){meow();confetti(8)}}
+        hud();it.el.remove();return false}
+      if(it.y>H){it.el.remove();return false}return true});
+    if(hearts<=0)return end();
+    requestAnimationFrame(loop)}
+  function end(){run=false;items.forEach(i=>i.el.remove());items=[];
+    const nb=score>best;if(nb){best=score;try{localStorage.setItem('catBest',best)}catch(e){}}
+    document.getElementById('fb').textContent=best;
+    over.innerHTML=`<div style="font-size:60px">${nb?'🏆😻':'😺'}</div><h1>${nb?'رقم قياسي جديد!':'انتهت اللعبة'}</h1><p style="font-size:20px;margin:8px 0">صدتِ ${score} سمكة 🐟</p><button class="btn" id="fgo">العبي مرة ثانية 🔁</button>`;
+    over.style.display='flex';document.getElementById('fgo').onclick=start;
+    meow();setTimeout(()=>say('أحسنتِ يا مريم!',.85,'ar'),700);if(nb)confetti(30)}
+  function start(){score=0;hearts=3;last=0;spawn=0;hud();over.style.display='none';run=true;meow();requestAnimationFrame(loop)}
+  document.getElementById('fgo').onclick=start;
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.p!=='fun'&&run){run=false;items.forEach(i=>i.el.remove());items=[];over.style.display='flex'}}));
+})();
+</script>
+</body>
+</html>
